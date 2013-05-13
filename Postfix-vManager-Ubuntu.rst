@@ -91,6 +91,10 @@ That's All MySQL server has been installed, now lest install webserver.
 
 Let's start the Webserver (Apache) installation with PHP support.
 
+::
+
+  sudo apt-get install postfix postfix-mysql sasl2-bin libsasl2-2 mailutils procmail dovecot-mysql dovecot-imapd
+
 6. WebServer Installation
 =========================
 
