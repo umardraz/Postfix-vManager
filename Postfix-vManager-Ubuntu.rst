@@ -20,8 +20,8 @@ Table of Contents
   1. Features
   2. Screenshots
   3. Requirements
-  4. MySQL Server
-  5. Web Server
+  4. MySQL Server Installation
+  5. Web Server Installation
   6. Postfix and Dovecot
   7. Postfix vManager Installation
 
@@ -55,5 +55,6 @@ Here is some screenshots of Postfix vManager.
 3. Requirements
 ===============
 
-Here is some screenshots of Postfix vManager.
-
+* Postfix which supports virtual domains and mailboxes including vda patch.
+* a compatible IMAP/POP3 server (such as Dovecot and Courier), but in this howto we will only discuss Dovecot
+* PHP v4 and above with PDO and mysqli supported.
