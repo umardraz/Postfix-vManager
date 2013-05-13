@@ -65,4 +65,19 @@ Here is some screenshots of Postfix vManager.
 Installing MySQL 5 Server on Ubuntu is a quick and easy process. In classic fashion let’s get the process underway by updating our system.
 
 ::
+
   sudo apt-get update && sudo apt-get upgrade
+
+Accept any updates that are available to you and then install MySQL Server like so:
+  
+::
+
+  sudo apt-get install mysql-server mysql-client
+
+The process will not take long but during the installation process you will be prompted to set a password for the MySQL ‘root user’. So choose a strong password and keep it in a safe place for future reference.
+
+When complete, run the following command to secure your installation:
+
+::
+
+  sudo mysql_secure_installation
