@@ -81,3 +81,7 @@ When complete, run the following command to secure your installation:
 ::
 
   sudo mysql_secure_installation
+
+This utility allows you to limit access to the ‘root’ account, it removes the test database, and allows you to remove all anonymous accounts.
+
+That's All MySQL server has been installed, now lest install webserver.
