@@ -58,3 +58,11 @@ Here is some screenshots of Postfix vManager.
 * Postfix which supports virtual domains and mailboxes including vda patch.
 * a compatible IMAP/POP3 server (such as Dovecot and Courier), but in this howto we will only discuss Dovecot
 * PHP v4 and above with PDO and mysqli supported.
+
+3. MySQL Server Installation
+============================
+
+Installing MySQL 5 Server on Ubuntu is a quick and easy process. In classic fashion let’s get the process underway by updating our system.
+
+::
+  sudo apt-get update && sudo apt-get upgrade
