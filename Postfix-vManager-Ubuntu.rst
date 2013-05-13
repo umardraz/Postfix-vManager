@@ -37,9 +37,11 @@ Postfix vManager was written in PHP, It requires PHP 5, Postfix, Dovecot and MyS
 
 Standard and enhanced features from Postfix vManager includes:
 
-* Super admin user level with full access::
-* Domain Admin user level with access only to assigned domains and their mailboxes and aliases::
-* Domain admins can create and modify SubDomain admins and mailboxes::
-* JQuery Datatable throughout for quick in browser searching and pagination::
-* Create, modify and delete domains including the mailboxes and aliases, a non-super admin can create per-domain; Activate / deactivate mailboxes and aliases at the click of a button::
-* Facility for users (mailbox owners) to change their password::
+* Super admin user level with full access.
+* Domain Admin user level with access only to assigned domains and their mailboxes and aliases.
+* Domain admins can create and modify SubDomain admins and mailboxes.
+* JQuery Datatable throughout for quick in browser searching and pagination.
+* Create, modify and delete domains including the mailboxes and aliases, a non-super admin can create per-domain; Activate / deactivate mailboxes and aliases at the click of a button.
+* Facility for users (mailbox owners) to change their password.
+* Parking Domain support.
+* Alias domain with virtual alias mailboes support.
