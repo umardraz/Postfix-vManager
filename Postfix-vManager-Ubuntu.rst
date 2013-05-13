@@ -30,7 +30,7 @@ Table of Contents
 
 The Postfix vManager provides an web based virtual mailbox administration system to allow Unix/Linux administrators to easily manage domains, parking domains, alias domain, mailboxes and forwardres. Postfix vManager is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License version 3.
 
-Postfix vManager was written in PHP, It requires PHP 5, Postfix, Dovecot and MySQL 
+Postfix vManager was written in PHP, It requires PHP 4 and above, Postfix, Dovecot and MySQL 
 
 1. Features
 ===========
@@ -45,3 +45,15 @@ Standard and enhanced features from Postfix vManager includes:
 * Facility for users (mailbox owners) to change their password.
 * Parking Domain support.
 * Alias domain with virtual alias mailboes support.
+* Autoresponder (Vacation) support enabled.
+
+2. Screenshots
+==============
+
+Here is some screenshots of Postfix vManager.
+
+3. Requirements
+===============
+
+Here is some screenshots of Postfix vManager.
+
