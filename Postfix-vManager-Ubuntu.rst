@@ -456,14 +456,19 @@ MySQL will be used to store password information, so /etc/dovecot/dovecot-mysql.
 ::
 
   driver = mysql
-  connect = host=localhost user=root password=r0se dbname=vmanager
+  connect = host=localhost user=vadmin password=vadmin_password dbname=vmanager
   default_pass_scheme = MD5-CRYPT
   password_query = SELECT password FROM mailbox WHERE username = '%u'
   user_query = SELECT '/home/vmail/%d/%n/Maildir' as home, 'maildir:/home/vmail/%d/%n/Maildir' as mail, 150 AS uid, 6 AS gid, concat('dirsize:storage=',quota) AS quota FROM mailbox WHERE username ='%u' AND active ='1'
 
 Dovecot has now been configured. You must restart it to make sure it is working properly, also restart postfix:
 
+::
 
+  service postfix restart
+  service dovecot restart
+
+That's Postfix and Dovecot installation is completed. Now let's install Apache and PHP for Postfix vManager Application.
 
 
 6. WebServer Installation
