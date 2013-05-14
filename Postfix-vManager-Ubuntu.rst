@@ -66,7 +66,8 @@ Installing MySQL 5 Server on Ubuntu is a quick and easy process. In classic fash
 
 ::
 
-  sudo apt-get update && sudo apt-get upgrade
+  sudo apt-get update
+  sudo apt-get upgrade
 
 Accept any updates that are available to you and then install MySQL Server like so:
   
