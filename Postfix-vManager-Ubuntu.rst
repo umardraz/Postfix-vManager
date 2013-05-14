@@ -111,7 +111,7 @@ That's all we have sucessfully create database for our application, latter on we
 3.2. Configure Postfix to work with MySQL
 -----------------
 
-Create a forwarding configuration file for forwarding emails from one email address to another, with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
+Create a virtual forwarding file called /etc/postfix/mysql_virtual_forwarders_maps.cf for forwarding emails from one email address to another, with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
 
 **File:** /etc/postfix/mysql_virtual_forwarders_maps.cf
 
@@ -123,6 +123,15 @@ Create a forwarding configuration file for forwarding emails from one email addr
   dbname = vmanager
   query = SELECT goto FROM forwarders WHERE address='%s' AND active = '1'
 
+Create a virtual domain configuration file for Postfix called mysql_virtual_domains_maps.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
+
+::
+
+  user = vadmin
+  password = vadmin_password
+  hosts = localhost
+  dbname = vmanager
+  query = SELECT domain FROM domain WHERE domain='%s' and active='1'
 
 6. WebServer Installation
 =========================
