@@ -103,9 +103,31 @@ Now download the vda patch according to your postfix version and then apply on P
   
   cd postfix-2.9.6
   patch -p1 < ../postfix-vda-v11-2.9.6.patch
+
+Next open debian/rules and change DEB_BUILD_HARDENING from 1 to 0:
+
+**File:** debian/rules
+
+::
+
+  [...]
+  export DEB_BUILD_HARDENING=0
+  [...]
+
+If you don't do this, your build will fail. Now we can build the new Postfix .deb packages:
+
+::
+
   dpkg-buildpackage
 
-After sucessfully build of postfix source, we need to go /usr/src directory where the new .deb packages have been created. The ls command will show you something like this.
+After sucessfully build of postfix source, we need to go /usr/src directory where the new .deb packages have been created. 
+
+::
+
+  cd /usr/src/
+  ls -al
+
+The ls command will show you something like this.
 
 3.2. Set up MySQL database for Virtual Domains and Users
 -----------------
