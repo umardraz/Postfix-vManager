@@ -545,6 +545,7 @@ During the install you may notice the following warning:
   apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1 for ServerName
 
 This comes from Apache itself and means that it was unable to determine its own name. The Apache server needs to know its own name under certain situations. For example, when creating redirection URLs.
+
 To stop this warning we can create an Apache config file to store the name. You can set this as either a hostname or a FQDN, but here we will use this as only "localhost"
 
 ::
