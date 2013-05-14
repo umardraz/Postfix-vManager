@@ -120,16 +120,16 @@ If you don't do this, your build will fail. Now we can build the new Postfix .de
 
   dpkg-buildpackage
 
-After sucessfully build of postfix source, we need to go /usr/src directory where the new .deb packages have been created. 
+After sucessfully build of postfix source, we need to go /usr/src directory where the new .deb packages have been created. Pick the postfix and postfix-mysql packages and install them like this: 
 
 ::
 
   cd /usr/src/
-  ls -al
+  dpkg -i postfix_2.9.6-1~12.04.1_amd64.deb postfix-mysql_2.9.6-1~12.04.1_amd64.deb
 
-The ls command will show you something like this.
+The above command will update the existing postfix package with quota enabled pacakge.
 
-3.2. Set up MySQL database for Virtual Domains and Users
+2. Set up MySQL database for Virtual Domains and Users
 -----------------
 
 Start the MySQL shell by issuing the following command. You'll be prompted to enter the root password for MySQL that you assigned during the initial setup.
