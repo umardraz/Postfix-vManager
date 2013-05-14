@@ -538,6 +538,25 @@ Apache is easily installed by entering the following command.
 
   sudo apt-get install apache2 -y
 
+During the install you may notice the following warning:
+
+::
+
+  apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1 for ServerName
+
+This comes from Apache itself and means that it was unable to determine its own name. The Apache server needs to know its own name under certain situations. For example, when creating redirection URLs.
+To stop this warning we can create an Apache config file to store the name. You can set this as either a hostname or a FQDN, but here we will use this as only "localhost"
+
+::
+
+  echo "ServerName localhost" > /etc/apache2/conf.d/servername.conf
+  
+In order for this change to take effect restart Apache. The warning should no longer appear.
+
+::
+
+  sudo service apache2 restart
+
 Postfix vManager depends on url rewriting for SEO purpose. In order to take advantage of this feature we need to enable Apache's rewrite module with the a2enmod command.
 
 ::
