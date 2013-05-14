@@ -288,7 +288,7 @@ Now create /etc/postfix/main.cf with the following contents Please be sure to re
   setgid_group = postdrop
   unknown_local_recipient_reject_code = 450
 
-  **Virtual Domain**
+  # Virtual Domains and Users
   virtual_transport = virtual
   virtual_alias_maps =
     proxy:mysql:$config_directory/mysql_virtual_forwarders_maps.cf,
@@ -306,10 +306,52 @@ Now create /etc/postfix/main.cf with the following contents Please be sure to re
   virtual_uid_maps = static:150
   virtual_gid_maps = static:150
 
-  **Additional for quota support**
+  # Additional for quota support
   virtual_mailbox_limit_override = yes
   virtual_maildir_limit_message = Sorry, the user's mail quota has exceeded.
   virtual_overquota_bounce = yes
+
+  # SMTP Authentication 
+  smtpd_sasl_auth_enable = yes
+  smtpd_sasl_security_options = noanonymous
+  broken_sasl_auth_clients = yes
+  smtpd_sasl_authenticated_header = yes
+  smtpd_sasl_type = dovecot
+  smtpd_sasl_path = private/auth
+
+  # Other Configurations
+  strict_rfc821_envelopes = yes
+  smtpd_soft_error_limit = 10
+  smtpd_hard_error_limit = 20
+  smtpd_data_restrictions = reject_unauth_pipelining, reject_multi_recipient_bounce
+  smtpd_etrn_restrictions = reject
+  smtpd_helo_required = yes
+  smtpd_recipient_limit = 25
+  smtpd_sender_login_maps = mysql:$config_directory/mysql_sender_check.cf
+
+  smtpd_recipient_restrictions =
+    permit_mynetworks,
+    permit_sasl_authenticated,
+    reject_unauth_destination,
+    reject_invalid_hostname,
+    reject_unauth_pipelining,
+    reject_non_fqdn_sender,
+    reject_unknown_sender_domain,
+    reject_non_fqdn_recipient,
+    reject_unknown_recipient_domain,
+    permit
+
+  smtpd_sender_restrictions =
+    permit_mynetworks,
+    reject_sender_login_mismatch,
+    permit_sasl_authenticated,
+    reject_unauth_destination,
+    reject_non_fqdn_sender,
+    reject_unknown_sender_domain,
+    reject_unauthenticated_sender_login_mismatch,
+    permit
+
+
 
 
 3.3. Configure Dovecot
