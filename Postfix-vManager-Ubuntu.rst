@@ -90,7 +90,7 @@ That's All MySQL server has been installed, now lest install Postfix and Dovecot
 5. Postfix and Dovecot
 ======================
 
-Let's start the Webserver (Apache) installation with PHP support.
+Let's start the Mail server Installation.
 
 ::
 
@@ -130,6 +130,15 @@ Issue the following command to create a database for your mail server and switch
   USE vmanager;
 
 Create a mail administration user called vadmin and grant it permissions on the mail database with the following commands. Please be sure to replace "vadmin_password" with a password you select for this user.
+
+::
+
+  GRANT SELECT, INSERT, UPDATE, DELETE ON vmanager.* TO 'vadmin'@'localhost' IDENTIFIED BY 'vadmin_password';
+  FLUSH PRIVILEGES;
+
+That's all we have sucessfully create database for our application, latter on we will restore our database schema into vmanager database when we will install Postfix vManager.
+
+
 
 6. WebServer Installation
 =========================
