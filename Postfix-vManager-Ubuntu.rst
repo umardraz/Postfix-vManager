@@ -16,23 +16,20 @@ Table of Contents
 
 ::
 
-  0. What is it?
-  1. Features
-  2. Screenshots
-  3. Requirements
-  4. MySQL Server Installation
-  5. Postfix and Dovecot
-  6. Web Server Installation
-  7. Postfix vManager Installation
+  1. Requirements
+  2. MySQL Server Installation
+  3. Postfix and Dovecot
+  4. Web Server Installation
+  5. Postfix vManager Installation
 
-3. Requirements
+1. Requirements
 ===============
 
 * Postfix which supports virtual domains and mailboxes including vda patch.
 * a compatible IMAP/POP3 server (such as Dovecot and Courier), but in this howto we will only discuss Dovecot
 * PHP v4 and above with PDO and mysqli supported.
 
-4. MySQL Server Installation
+2. MySQL Server Installation
 ============================
 
 Installing MySQL 5 Server on Ubuntu is a quick and easy process. In classic fashion let’s get the process underway by updating our system.
@@ -60,7 +57,7 @@ This utility allows you to limit access to the ‘root’ account, it removes th
 
 That's All MySQL server has been installed, now lest install Postfix and Dovecot.
 
-5. Postfix and Dovecot
+3. Postfix and Dovecot
 ======================
 
 Let's start the Mail server Installation.
@@ -74,7 +71,7 @@ This will install the Postfix mail server, the Dovecot IMAP and POP daemons, and
 
 After sucessfully installation of Postfix, in the next step will create database for our Postfix vManager.
 
-5.1. Set up MySQL database for Virtual Domains and Users
+3.1. Set up MySQL database for Virtual Domains and Users
 -----------------
 
 Start the MySQL shell by issuing the following command. You'll be prompted to enter the root password for MySQL that you assigned during the initial setup.
