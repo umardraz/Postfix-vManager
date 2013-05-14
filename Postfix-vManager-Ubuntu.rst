@@ -231,6 +231,28 @@ Create a alias domains relay configuration file called /etc/postfix/mysql_alias_
   dbname = vmanager
   query = SELECT DISTINCT alias_domain FROM alias_domain WHERE alias_domain='%s' and active = '1'
   
+Set proper permissions and ownership for these configuration files by issuing the following commands:
+
+::
+
+  chmod o= /etc/postfix/mysql_*
+  chgrp postfix /etc/postfix/mysql_*
+
+Next, we'll create a user and group for mail handling. All virtual mailboxes will be stored under this user's home directory.
+
+::
+
+  groupadd -g 150 vmail
+  useradd -g vmail -u 150 -d /home/vmail -m vmail
+
+Now create /etc/postfix/main.cf with the following contents Please be sure to replace "vmanager.example.com" with the fully qualified domain name you used for your system mail name.
+
+**File:** /etc/postfix/main.cf
+
+
+
+3.3. Configure Dovecot
+-----------------
 
 6. WebServer Installation
 =========================
