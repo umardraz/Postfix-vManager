@@ -99,6 +99,31 @@ Let's start the Webserver (Apache) installation with PHP support.
 
 This will install the Postfix mail server, the Dovecot IMAP and POP daemons, and several supporting packages that provide services related to authentication. You will be prompted to choose a system mail name for Postfix, make sure this should be a fully qualified domain name (FQDN) that points to your server's IP address. I will use example.yourdomain.com in this setup.
 
+After sucessfully installation of Postfix, in the next step will create database for our Postfix vManager.
+
+5.1. Set up MySQL database for Virtual Domains and Users
+-----------------
+
+Start the MySQL shell by issuing the following command. You'll be prompted to enter the root password for MySQL that you assigned during the initial setup.
+
+::
+
+  mysql -u root -p
+
+You'll be presented with an interface similar to the following:
+
+::
+
+  Welcome to the MySQL monitor.  Commands end with ; or \g.
+  Your MySQL connection id is 48
+  Server version: 5.5.31-0ubuntu0.12.04.1 (Ubuntu)
+
+  Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+  mysql>
+
+
+
 6. WebServer Installation
 =========================
 
