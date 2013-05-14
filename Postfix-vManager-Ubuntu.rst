@@ -108,6 +108,20 @@ Create a mail administration user called vadmin and grant it permissions on the 
 
 That's all we have sucessfully create database for our application, latter on we will restore our database schema into vmanager database when we will install Postfix vManager.
 
+3.2. Configure Postfix to work with MySQL
+-----------------
+
+Create a forwarding configuration file for forwarding emails from one email address to another, with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
+
+File:/etc/postfix/mysql_virtual_forwarders_maps.cf
+
+::
+
+  user = vadmin
+  password = vadmin_password
+  hosts = localhost
+  dbname = vmanager
+  query = SELECT goto FROM forwarders WHERE address='%s' AND active = '1'
 
 
 6. WebServer Installation
