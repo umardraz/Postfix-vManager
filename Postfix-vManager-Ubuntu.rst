@@ -524,7 +524,7 @@ Using the a2ensite command and restarting Apache will load the new configuration
 
 ::
 
-  sudo a2ensite magento-store.com
+  sudo a2ensite example.yourdomain.com
   sudo service apache2 restart
 
 
