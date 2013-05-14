@@ -113,7 +113,7 @@ That's all we have sucessfully create database for our application, latter on we
 
 Create a forwarding configuration file for forwarding emails from one email address to another, with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
 
-File: /etc/postfix/mysql_virtual_forwarders_maps.cf
+**File:** /etc/postfix/mysql_virtual_forwarders_maps.cf
 
 ::
 
