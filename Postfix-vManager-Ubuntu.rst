@@ -360,6 +360,31 @@ Create an SSL Certificate for Postfix
 
 Issue the following commands to create the SSL certificate
 
+::
+
+  cd /etc/postfix
+  openssl req -new -outform PEM -out smtpd.cert -newkey rsa:2048 -nodes -keyout smtpd.key -keyform PEM -days 365 -x509
+
+You will be asked to enter several values similar to the output shown below. Be sure to enter the fully qualified domain name you used for the system mailname in place of "example.yourdomain.com".
+
+::
+
+  Country Name (2 letter code) [AU]:PK
+  State or Province Name (full name) [Some-State]:Punjab
+  Locality Name (eg, city) []:Lahore
+  Organization Name (eg, company) [Internet Widgits Pty Ltd]:MyComapny
+  Organizational Unit Name (eg, section) []:Email Services
+  Common Name (eg, YOUR name) []:example.yourdomain.com
+  Email Address []:webmaster@yourdomain.com
+
+Set proper permissions for the key file by issuing the following command:
+
+::
+
+  chmod o= /etc/postfix/smtpd.key
+
+This completes SSL certificate creation for Postfix. Next, you'll need to configure Dovecot for imap service.
+
 
 3.3. Configure Dovecot
 -----------------
