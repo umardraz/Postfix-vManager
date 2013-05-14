@@ -123,7 +123,7 @@ Create a virtual forwarding file called /etc/postfix/mysql_virtual_forwarders_ma
   dbname = vmanager
   query = SELECT goto FROM forwarders WHERE address='%s' AND active = '1'
 
-Create a virtual domain configuration file for Postfix called mysql_virtual_domains_maps.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
+Create a virtual domain configuration file for Postfix called /etc/postfix/mysql_virtual_domains_maps.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
 
 **File:** /etc/postfix/mysql_virtual_domains_maps.cf
 
@@ -135,7 +135,7 @@ Create a virtual domain configuration file for Postfix called mysql_virtual_doma
   dbname = vmanager
   query = SELECT domain FROM domain WHERE domain='%s' and active='1'
 
-Create a virtual mailbox configuration file for Postfix called mysql_virtual_mailbox_maps.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
+Create a virtual mailbox configuration file for Postfix called /etc/postfix/mysql_virtual_mailbox_maps.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
 
 **File:** /etc/postfix/mysql_virtual_mailbox_maps.cf
 
@@ -147,7 +147,7 @@ Create a virtual mailbox configuration file for Postfix called mysql_virtual_mai
   dbname = vmanager
   query = SELECT CONCAT(domain,'/',maildir) FROM mailbox WHERE username='%s' AND active = '1'
 
-Create a mailbox quota limit configuration file for Postfix called mysql_virtual_mailbox_limit_maps.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
+Create a mailbox quota limit configuration file for Postfix called /etc/postfix/mysql_virtual_mailbox_limit_maps.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
 
 **File:** /etc/postfix/mysql_virtual_mailbox_limit_maps.cf
 
@@ -159,7 +159,7 @@ Create a mailbox quota limit configuration file for Postfix called mysql_virtual
   dbname = vmanager
   query = SELECT quota FROM mailbox WHERE username='%s'
 
-Create a sender check configuration file called mysql_sender_check.cf so after smtp authentication senders can not use our mail server as open relay.
+Create a sender check configuration file called /etc/postfix/mysql_sender_check.cf so after smtp authentication senders can not use our mail server as open relay.
 
 **File:** /etc/postfix/mysql_sender_check.cf
 
@@ -171,7 +171,7 @@ Create a sender check configuration file called mysql_sender_check.cf so after s
   dbname = vmanager
   query = SELECT username FROM mailbox WHERE username='%s' and active=1
 
-Create a transport map configuration file called mysql_transport.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
+Create a transport map configuration file called /etc/postfix/mysql_transport.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
 
 **File:** /etc/postfix/mysql_transport.cf
 
@@ -183,7 +183,7 @@ Create a transport map configuration file called mysql_transport.cf with the fol
   dbname = vmanager
   query = SELECT destination FROM transport where domain = '%s'
 
-Create a alias domains configuration file called mysql_virtual_alias_domains_maps.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
+Create a alias domains configuration file called /etc/postfix/mysql_virtual_alias_domains_maps.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
 
 **File:** /etc/postfix/mysql_virtual_alias_domains_maps.cf
 
@@ -195,6 +195,42 @@ Create a alias domains configuration file called mysql_virtual_alias_domains_map
   dbname = vmanager
   query = SELECT target_domain FROM alias_domain WHERE address = '%s' OR address = concat('@', SUBSTRING_INDEX('%s', '@', -1)) AND concat('@', alias_domain) = '%s' AND active = '1'
 
+Create a parking domain configuration file called /etc/postfix/mysql_parking_domains_maps.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
+
+**File:** /etc/postfix/mysql_parking_domains_maps.cf
+
+::
+
+  user = vadmin
+  password = vadmin_password
+  hosts = localhost
+  dbname = vmanager
+  query = SELECT domain FROM parking_domains WHERE domain='%s' and active = '1'
+
+Create a virtual groups configuration file called /etc/postfix/mysql_virtual_groups_maps.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
+
+**File:** /etc/postfix/mysql_virtual_groups_maps.cf
+
+::
+
+  user = vadmin
+  password = vadmin_password
+  hosts = localhost
+  dbname = vmanager
+  query = SELECT goto FROM groups WHERE address='%s' AND active = '1'
+
+Create a alias domains relay configuration file called /etc/postfix/mysql_alias_domains.maps.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
+
+**File:** /etc/postfix/mysql_alias_domains.maps.cf
+
+::
+
+  user = vadmin
+  password = vadmin_password
+  hosts = localhost
+  dbname = vmanager
+  query = SELECT DISTINCT alias_domain FROM alias_domain WHERE alias_domain='%s' and active = '1'
+  
 
 6. WebServer Installation
 =========================
