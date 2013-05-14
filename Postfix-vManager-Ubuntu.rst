@@ -147,6 +147,31 @@ Create a virtual mailbox configuration file for Postfix called mysql_virtual_mai
   dbname = vmanager
   query = SELECT CONCAT(domain,'/',maildir) FROM mailbox WHERE username='%s' AND active = '1'
 
+Create a mailbox quota limit configuration file for Postfix called mysql_virtual_mailbox_limit_maps.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
+
+**File:** /etc/postfix/mysql_virtual_mailbox_limit_maps.cf
+
+::
+
+  user = vadmin
+  password = vadmin_password
+  hosts = localhost
+  dbname = vmanager
+  query = SELECT quota FROM mailbox WHERE username='%s'
+
+Create a sender check configuration file called mysql_sender_check.cf so after smtp authentication senders can not use our mail server as open relay.
+
+**File:** /etc/postfix/mysql_sender_check.cf
+
+::
+
+  user = vadmin
+  password = vadmin_password
+  hosts = localhost
+  dbname = vmanager
+  query = SELECT username FROM mailbox WHERE username='%s' and active=1
+
+
 
 6. WebServer Installation
 =========================
