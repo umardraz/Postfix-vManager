@@ -320,6 +320,10 @@ Now create /etc/postfix/main.cf with the following contents Please be sure to re
   smtpd_sasl_path = private/auth
 
   # TLS/SSL
+  smtpd_use_tls = yes
+  smtpd_tls_auth_only = no
+  smtpd_tls_cert_file = /etc/postfix/smtpd.cert
+  smtpd_tls_key_file = /etc/postfix/smtpd.key
 
   # Other Configurations
   strict_rfc821_envelopes = yes
@@ -385,9 +389,82 @@ Set proper permissions for the key file by issuing the following command:
 
 This completes SSL certificate creation for Postfix. Next, you'll need to configure Dovecot for imap service.
 
-
 3.3. Configure Dovecot
 -----------------
+
+Replace the contents of the file with the following example, substituting your system's domain name for yourdomain.com.
+
+**File:** /etc/dovecot/dovecot.conf
+
+::
+
+  auth_mechanisms = plain login
+  base_dir = /var/run/dovecot/
+  disable_plaintext_auth = no
+  first_valid_gid = 150
+  first_valid_uid = 150
+  last_valid_gid = 150
+  last_valid_uid = 150
+  log_path = /var/log/mail.log
+  log_timestamp = %Y-%m-%d %H:%M:%S
+  auth_username_format = %Lu
+  mail_access_groups = mail
+  mail_location = maildir:~/Maildir
+
+  passdb {
+    args = /etc/dovecot/dovecot-mysql.conf
+    driver = sql
+  }
+
+  protocols = imap
+
+  service auth {
+    unix_listener /var/spool/postfix/private/auth {
+      group = postfix
+      mode = 0660
+      user = postfix
+    }
+  }
+
+  service imap-login {
+    inet_listener imap {
+      address = *
+      port = 143
+    }
+  }
+
+  service pop3-login {
+    inet_listener pop3 {
+      address = *
+      port = 110
+    }
+  }
+
+  ssl = yes
+  ssl_cert = </etc/postfix/smtpd.cert
+  ssl_key = </etc/postfix/smtpd.key
+
+  userdb {
+    args = /etc/dovecot/dovecot-mysql.conf
+    driver = sql
+  }
+
+MySQL will be used to store password information, so /etc/dovecot/dovecot-mysql.conf must be edited. Replace the contents of the file with the following example, making sure to replace "vadmin_password" with your mail password.
+
+**File:** /etc/dovecot/dovecot-mysql.conf
+
+::
+
+  driver = mysql
+  connect = host=localhost user=root password=r0se dbname=vmanager
+  default_pass_scheme = MD5-CRYPT
+  password_query = SELECT password FROM mailbox WHERE username = '%u'
+  user_query = SELECT '/home/vmail/%d/%n/Maildir' as home, 'maildir:/home/vmail/%d/%n/Maildir' as mail, 150 AS uid, 6 AS gid, concat('dirsize:storage=',quota) AS quota FROM mailbox WHERE username ='%u' AND active ='1'
+
+Dovecot has now been configured. You must restart it to make sure it is working properly, also restart postfix:
+
+
+
 
 6. WebServer Installation
 =========================
