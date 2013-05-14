@@ -245,9 +245,49 @@ Next, we'll create a user and group for mail handling. All virtual mailboxes wil
   groupadd -g 150 vmail
   useradd -g vmail -u 150 -d /home/vmail -m vmail
 
-Now create /etc/postfix/main.cf with the following contents Please be sure to replace "vmanager.example.com" with the fully qualified domain name you used for your system mail name.
+Now create /etc/postfix/main.cf with the following contents Please be sure to replace "example.yourdomain.com" with the fully qualified domain name you used for your system mail name.
 
 **File:** /etc/postfix/main.cf
+
+::
+
+  soft_bounce = no
+  smtpd_banner = $myhostname
+  biff = no
+  append_dot_mydomain = no
+  inet_interfaces = all
+  myhostname = vmanager.cartrade.pk
+  myorigin = $myhostname
+  mydomain = cartrade.pk
+  mynetworks = 127.0.0.0/8
+  mynetworks_style = host
+  mydestination = $myhostname, localhost.$mydomain, localhost
+  alias_maps = $virtual_alias_maps
+  local_transport = local
+  transport_maps = proxy:mysql:$config_directory/mysql_transport.cf
+  debug_peer_level = 2
+  debugger_command =
+         PATH=/bin:/usr/bin:/usr/local/bin:/usr/X11R6/bin
+         ddd $daemon_directory/$process_name $process_id & sleep 5
+  html_directory = /usr/share/doc/postfix
+  disable_vrfy_command = yes
+  mailbox_size_limit = 0
+  message_size_limit = 30000000
+  owner_request_special = no
+  recipient_delimiter = +
+  home_mailbox = Maildir/
+  mail_owner = postfix
+  command_directory = /usr/sbin
+  daemon_directory = /usr/lib/postfix
+  data_directory = /var/lib/postfix
+  queue_directory = /var/spool/postfix
+  sendmail_path = /usr/sbin/sendmail
+  newaliases_path = /usr/bin/newaliases
+  mailq_path = /usr/bin/mailq
+  mail_spool_directory = /var/spool/mail
+  manpage_directory = /usr/local/man
+  setgid_group = postdrop
+  unknown_local_recipient_reject_code = 450
 
 
 
