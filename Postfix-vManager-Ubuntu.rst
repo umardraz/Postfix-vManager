@@ -125,6 +125,8 @@ Create a virtual forwarding file called /etc/postfix/mysql_virtual_forwarders_ma
 
 Create a virtual domain configuration file for Postfix called mysql_virtual_domains_maps.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
 
+**File:** /etc/postfix/mysql_virtual_domains_maps.cf
+
 ::
 
   user = vadmin
@@ -132,6 +134,19 @@ Create a virtual domain configuration file for Postfix called mysql_virtual_doma
   hosts = localhost
   dbname = vmanager
   query = SELECT domain FROM domain WHERE domain='%s' and active='1'
+
+Create a virtual mailbox configuration file for Postfix called mysql_virtual_mailbox_maps.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
+
+**File:** /etc/postfix/mysql_virtual_mailbox_maps.cf
+
+::
+
+  user = vadmin
+  password = vadmin_password
+  hosts = localhost
+  dbname = vmanager
+  query = SELECT CONCAT(domain,'/',maildir) FROM mailbox WHERE username='%s' AND active = '1'
+
 
 6. WebServer Installation
 =========================
