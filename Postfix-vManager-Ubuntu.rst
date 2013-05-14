@@ -590,7 +590,7 @@ We will create a simple virtual host configuration file that will instruct Apach
 
   sudo bash -c "cat >> /etc/apache2/sites-available/example.yourdomain.com <<EOF
   <VirtualHost *:80>
-    ServerName  example.yourdomain.com
+    ServerName example.yourdomain.com
     ServerAlias yourdomain.com
     DocumentRoot /var/www/vmanager
     ErrorLog /var/log/httpd/vmanager.error.log
@@ -598,10 +598,11 @@ We will create a simple virtual host configuration file that will instruct Apach
   </VirtualHost>
   EOF"
 
-Using the a2ensite command and restarting Apache will load the new configuration file.
+Using the a2ensite command and restarting Apache will load the new configuration file. But before this we will remove the existing link from site-enabled directory.
 
 ::
 
+  rm /etc/apache2/sites-enabled/000-default
   sudo a2ensite example.yourdomain.com
   sudo service apache2 restart
 
