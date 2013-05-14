@@ -471,7 +471,7 @@ Dovecot has now been configured. You must restart it to make sure it is working 
 That's Postfix and Dovecot installation is completed. Now let's install Apache and PHP for Postfix vManager Application.
 
 
-6. WebServer Installation
+4. WebServer Installation
 =========================
 
 Apache is easily installed by entering the following command.
@@ -487,8 +487,45 @@ Postfix vManager depends on url rewriting for SEO purpose. In order to take adva
   sudo a2enmod rewrite
   sudo service apache2 restart
 
+Installing PHP
+-----------------
 
+We will therefore install PHP with the following command.
 
+::
+
+  sudo apt-get install php5 php5-curl php5-gd php5-mcrypt php5-mysql -y
+
+Configuring the Apache Virtual Host
+-----------------------------------
+
+We will use /var/www/vamanager for our Application Document root, now create the directory and apply proper permission
+
+::
+
+  mkdir -p /var/www/vmanager
+  chown -R www-data:www-data /var/www/
+
+We will create a simple virtual host configuration file that will instruct Apache to serve the contents of the directory /var/www/vmanager for any requests to example.yourdomain.com
+
+::
+
+  sudo bash -c "cat >> /etc/apache2/sites-available/example.yourdomain.com <<EOF
+  <VirtualHost *:80>
+    ServerName  example.yourdomain.com
+    ServerAlias yourdomain.com
+    DocumentRoot /var/www/vmanager
+    ErrorLog /var/log/httpd/vmanager.error.log
+    CustomLog /var/log/httpd/vmanager.access.log combined
+  </VirtualHost>
+  EOF"
+
+Using the a2ensite command and restarting Apache will load the new configuration file.
+
+::
+
+  sudo a2ensite magento-store.com
+  sudo service apache2 restart
 
 
 
