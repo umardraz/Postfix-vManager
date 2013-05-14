@@ -499,7 +499,7 @@ We will therefore install PHP with the following command.
 Configuring the Apache Virtual Host
 -----------------------------------
 
-We will use /var/www/vamanager for our Application Document root, now create the directory and apply proper permission
+We will use /var/www/vamanager for our document root of Postfix vManager, now create the directory and apply proper permission
 
 ::
 
@@ -527,5 +527,4 @@ Using the a2ensite command and restarting Apache will load the new configuration
   sudo a2ensite example.yourdomain.com
   sudo service apache2 restart
 
-
-
+If everything has gone according to plan you should be able to open a browser and navigate to example.yourdomain.com where you will see a directory listing.
