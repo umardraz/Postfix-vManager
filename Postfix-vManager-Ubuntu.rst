@@ -474,4 +474,21 @@ That's Postfix and Dovecot installation is completed. Now let's install Apache a
 6. WebServer Installation
 =========================
 
-Let's start the Webserver (Apache) installation with PHP support.
+Apache is easily installed by entering the following command.
+
+::
+
+  sudo apt-get install apache2 -y
+
+Postfix vManager depends on url rewriting for SEO purpose. In order to take advantage of this feature we need to enable Apache's rewrite module with the a2enmod command.
+
+::
+
+  sudo a2enmod rewrite
+  sudo service apache2 restart
+
+
+
+
+
+
