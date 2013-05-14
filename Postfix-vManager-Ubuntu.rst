@@ -122,7 +122,14 @@ You'll be presented with an interface similar to the following:
 
   mysql>
 
+Issue the following command to create a database for your mail server and switch to it in the shell:
 
+::
+
+  CREATE DATABASE vmanager;
+  USE vmanager;
+
+Create a mail administration user called vadmin and grant it permissions on the mail database with the following commands. Please be sure to replace "vadmin_password" with a password you select for this user.
 
 6. WebServer Installation
 =========================
