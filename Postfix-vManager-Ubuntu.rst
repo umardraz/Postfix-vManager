@@ -94,7 +94,10 @@ Let's start the Webserver (Apache) installation with PHP support.
 
 ::
 
-  sudo apt-get install postfix postfix-mysql sasl2-bin libsasl2-2 mailutils procmail dovecot-mysql dovecot-imapd
+  sudo apt-get install postfix postfix-mysql sasl2-bin libsasl2-2 libsasl2-modules openssl mailutils procmail dovecot-mysql dovecot-imapd dovecot-pop3d
+
+
+This will install the Postfix mail server, the Dovecot IMAP and POP daemons, and several supporting packages that provide services related to authentication. You will be prompted to choose a system mail name for Postfix, make sure this should be a fully qualified domain name (FQDN) that points to your server's IP address. I will use example.yourdomain.com in this setup.
 
 6. WebServer Installation
 =========================
