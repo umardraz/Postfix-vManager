@@ -598,6 +598,12 @@ We will create a simple virtual host configuration file that will instruct Apach
   </VirtualHost>
   EOF"
 
+As you notice, I have use /var/log/httpd directory for our application logs. We need to create this directory, before enabling our virtualhost.
+
+::
+
+  mkdir /var/log/httpd
+
 Using the a2ensite command and restarting Apache will load the new configuration file. But before this we will remove the existing link from site-enabled directory.
 
 ::
