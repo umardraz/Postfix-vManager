@@ -272,7 +272,6 @@ Now create /etc/postfix/main.cf with the following contents Please be sure to re
   html_directory = /usr/share/doc/postfix
   disable_vrfy_command = yes
   mailbox_size_limit = 0
-  message_size_limit = 30000000
   owner_request_special = no
   recipient_delimiter = +
   home_mailbox = Maildir/
@@ -289,6 +288,28 @@ Now create /etc/postfix/main.cf with the following contents Please be sure to re
   setgid_group = postdrop
   unknown_local_recipient_reject_code = 450
 
+  **Virtual Domain**
+  virtual_transport = virtual
+  virtual_alias_maps =
+    proxy:mysql:$config_directory/mysql_virtual_forwarders_maps.cf,
+    proxy:mysql:$config_directory/mysql_virtual_groups_maps.cf,
+    proxy:mysql:$config_directory/mysql_virtual_alias_domains_maps.cf
+  virtual_mailbox_domains = proxy:mysql:$config_directory/mysql_virtual_domains_maps.cf
+  virtual_mailbox_maps = proxy:mysql:$config_directory/mysql_virtual_mailbox_maps.cf
+  virtual_mailbox_limit_maps = proxy:mysql:$config_directory/mysql_virtual_mailbox_limit_maps.cf
+  virtual_mailbox_base = /home/vmail
+  relay_domains =
+    proxy:mysql:$config_directory/mysql_parking_domains_maps.cf,
+    proxy:mysql:$config_directory/mysql_alias_domains.maps.cf
+  proxy_read_maps = $local_recipient_maps $mydestination $virtual_alias_maps $virtual_mailbox_maps $virtual_mailbox_domains $relay_domains $virtual_mailbox_limit_maps $transport_maps
+  virtual_minimum_uid = 150
+  virtual_uid_maps = static:150
+  virtual_gid_maps = static:150
+
+  **Additional for quota support**
+  virtual_mailbox_limit_override = yes
+  virtual_maildir_limit_message = Sorry, the user's mail quota has exceeded.
+  virtual_overquota_bounce = yes
 
 
 3.3. Configure Dovecot
