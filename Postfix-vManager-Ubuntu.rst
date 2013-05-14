@@ -71,7 +71,43 @@ This will install the Postfix mail server, the Dovecot IMAP and POP daemons, and
 
 After sucessfully installation of Postfix, in the next step will create database for our Postfix vManager.
 
-3.1. Set up MySQL database for Virtual Domains and Users
+3.1. Apply The Quota Patch To Postfix
+-------------------------------------
+
+We have to get the Postfix sources, patch it with the quota patch, build new Postfix .deb packages and install those .deb packages:
+
+::
+
+  apt-get build-dep postfix
+  cd /usr/src
+  apt-get source postfix
+
+Make sure you use the correct Postfix version in the following commands. I have Postfix 2.9.6 installed. You can find out your Postfix version by running
+
+::
+
+  postconf -d | grep mail_version
+
+The output should look like this:
+
+::
+
+  mail_version = 2.9.6
+  milter_macro_v = $mail_name $mail_version
+
+Now download the vda patch according to your postfix version and then apply on Postfix source with the following commands.
+
+::
+
+  wget http://vda.sourceforge.net/VDA/postfix-vda-v11-2.9.6.patch
+  
+  cd postfix-2.9.6
+  patch -p1 < ../postfix-vda-v11-2.9.6.patch
+  dpkg-buildpackage
+
+After sucessfully build of postfix source, we need to go /usr/src directory where the new .deb packages have been created. The ls command will show you something like this.
+
+3.2. Set up MySQL database for Virtual Domains and Users
 -----------------
 
 Start the MySQL shell by issuing the following command. You'll be prompted to enter the root password for MySQL that you assigned during the initial setup.
