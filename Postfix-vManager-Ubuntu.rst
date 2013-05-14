@@ -183,7 +183,7 @@ Create a transport map configuration file called /etc/postfix/mysql_transport.cf
   dbname = vmanager
   query = SELECT destination FROM transport where domain = '%s'
 
-Create a alias domains configuration file called /etc/postfix/mysql_virtual_alias_domains_maps.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
+Create an alias domains configuration file called /etc/postfix/mysql_virtual_alias_domains_maps.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
 
 **File:** /etc/postfix/mysql_virtual_alias_domains_maps.cf
 
@@ -219,7 +219,7 @@ Create a virtual groups configuration file called /etc/postfix/mysql_virtual_gro
   dbname = vmanager
   query = SELECT goto FROM groups WHERE address='%s' AND active = '1'
 
-Create a alias domains relay configuration file called /etc/postfix/mysql_alias_domains.maps.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
+Create an alias domains relay configuration file called /etc/postfix/mysql_alias_domains.maps.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
 
 **File:** /etc/postfix/mysql_alias_domains.maps.cf
 
@@ -256,9 +256,9 @@ Now create /etc/postfix/main.cf with the following contents Please be sure to re
   biff = no
   append_dot_mydomain = no
   inet_interfaces = all
-  myhostname = vmanager.cartrade.pk
+  myhostname = example.yourdomain.com
   myorigin = $myhostname
-  mydomain = cartrade.pk
+  mydomain = yourdomain.com
   mynetworks = 127.0.0.0/8
   mynetworks_style = host
   mydestination = $myhostname, localhost.$mydomain, localhost
@@ -319,6 +319,8 @@ Now create /etc/postfix/main.cf with the following contents Please be sure to re
   smtpd_sasl_type = dovecot
   smtpd_sasl_path = private/auth
 
+  # TLS/SSL
+
   # Other Configurations
   strict_rfc821_envelopes = yes
   smtpd_soft_error_limit = 10
@@ -351,7 +353,12 @@ Now create /etc/postfix/main.cf with the following contents Please be sure to re
     reject_unauthenticated_sender_login_mismatch,
     permit
 
+This completes the configuration for Postfix. Next, you'll make an SSL certificate for the Postfix server that contains values appropriate for your organization.
 
+Create an SSL Certificate for Postfix
+-----------------
+
+Issue the following commands to create the SSL certificate
 
 
 3.3. Configure Dovecot
