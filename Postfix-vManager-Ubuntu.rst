@@ -171,6 +171,29 @@ Create a sender check configuration file called mysql_sender_check.cf so after s
   dbname = vmanager
   query = SELECT username FROM mailbox WHERE username='%s' and active=1
 
+Create a transport map configuration file called mysql_transport.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
+
+**File:** /etc/postfix/mysql_transport.cf
+
+::
+
+  user = vadmin
+  password = vadmin_password
+  hosts = localhost
+  dbname = vmanager
+  query = SELECT destination FROM transport where domain = '%s'
+
+Create a alias domains configuration file called mysql_virtual_alias_domains_maps.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
+
+**File:** /etc/postfix/mysql_virtual_alias_domains_maps.cf
+
+::
+
+  user = vadmin
+  password = vadmin_password
+  hosts = localhost
+  dbname = vmanager
+  query = SELECT target_domain FROM alias_domain WHERE address = '%s' OR address = concat('@', SUBSTRING_INDEX('%s', '@', -1)) AND concat('@', alias_domain) = '%s' AND active = '1'
 
 
 6. WebServer Installation
