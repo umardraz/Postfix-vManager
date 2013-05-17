@@ -3,7 +3,7 @@
 ==========================================================
 
 :Version: 2.0
-:Source: https://www.box.com/s/3k78z4beusllqp9q02sr
+:Source: https://www.box.com/s/eaxlcqxp3vu41xecg3bd
 :Keywords: Postfix Mail server management, Cyrus-SASL, Dovecot, MySQL, Virtual Domains, Alias Domains
 
 Author
@@ -619,10 +619,15 @@ Now let's start the installation of Postfix vManager
 4. Postfix vManager
 ===================
 
-First download postfix vmanager source from this url :Source: https://www.box.com/s/3k78z4beusllqp9q02sr
+First download postfix vmanager source from this url :Source: https://www.box.com/s/eaxlcqxp3vu41xecg3bd
 
-After downloading the source you need to extract and then first remove the /var/www/vmanager directory then move extracted source into /var/www/vmanager/ let's do it.
+After downloading the postfix-vmanager-2.0.tar.gz just extract the source. 
+
+Then first remove the /var/www/vmanager directory and move extracted source into /var/www/vmanager/ let's do it.
 
 ::
 
-  rm /etc/apache2/sites-enabled/000-default
+  tar xzvpf postfix-vmanager-2.0.tar.gz
+  rm -rf /var/www/vmanager
+  mv postfix-vmanager-2.0 /var/www/vmanager
+  
