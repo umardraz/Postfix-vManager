@@ -613,3 +613,16 @@ Using the a2ensite command and restarting Apache will load the new configuration
   sudo service apache2 restart
 
 If everything has gone according to plan you should be able to open a browser and navigate to example.yourdomain.com where you will see a directory listing.
+
+Now let's start the installation of Postfix vManager
+
+4. Postfix vManager
+===================
+
+First download postfix vmanager source from this url :Source: https://www.box.com/s/3k78z4beusllqp9q02sr
+
+After downloading the source you need to extract and then first remove the /var/www/vmanager directory then move extracted source into /var/www/vmanager/ let's do it.
+
+::
+
+  rm /etc/apache2/sites-enabled/000-default
