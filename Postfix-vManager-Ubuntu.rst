@@ -630,4 +630,7 @@ Then first remove the /var/www/vmanager directory and move extracted source into
   tar xzvpf postfix-vmanager-2.0.tar.gz
   rm -rf /var/www/vmanager
   mv postfix-vmanager-2.0 /var/www/vmanager
+  chown -R www-data:www-data /var/www/vmanager/
+  
+
   
