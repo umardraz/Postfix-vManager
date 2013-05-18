@@ -36,24 +36,36 @@ Installing MySQL 5 Server on CentOS is a quick and easy process. In classic fash
 
 ::
 
-  sudo apt-get update
-  sudo apt-get upgrade
+  yum update
 
 Accept any updates that are available to you and then install MySQL Server like so:
   
 ::
 
-  sudo apt-get install mysql-server mysql-client
+  yum install mysql-server mysql-client
 
-The process will not take long but during the installation process you will be prompted to set a password for the MySQL ‘root user’. So choose a strong password and keep it in a safe place for future reference.
-
-When complete, run the following command to secure your installation:
+If you want to run MySQL by default when the system boots, which is a typical setup, execute the following command:
 
 ::
 
-  sudo mysql_secure_installation
+  /sbin/chkconfig --levels 235 mysqld on
+  
 
-This utility allows you to limit access to the ‘root’ account, it removes the test database, and allows you to remove all anonymous accounts.
+Now you can start the mysql daemon (mysqld) with the following command (as root):
+
+::
+
+  /etc/init.d/mysqld start
+
+At this point MySQL should be ready to configure and run. While you shouldn't need to change the configuration file, note that it is located at /etc/my.cnf for future reference.
+
+**Configure MySQL and Set Up MySQL databases:**
+
+After installing MySQL, it's recommended that you run mysql_secure_installation, a program that helps secure MySQL. While running mysql_secure_installation, you will be presented with the opportunity to change the MySQL root password, remove anonymous user accounts, disable root logins outside of localhost, and remove test databases. It is recommended that you answer yes to these options. If you are prompted to reload the privilege tables, select yes. Run the following command to execute the program:
+
+::
+
+  mysql_secure_installation
 
 That's All MySQL server has been installed, now lest install Postfix and Dovecot.
 
