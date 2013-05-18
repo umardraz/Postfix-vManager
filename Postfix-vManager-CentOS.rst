@@ -82,8 +82,6 @@ Let's start the Mail server Installation.
 
 This will install the Postfix mail server, the Dovecot IMAP and POP daemons, and several supporting packages that provide services related to authentication.
 
-After sucessfully installation of Postfix, in the next step will create database for our Postfix vManager.
-
 3.1. Apply The Quota Patch To Postfix
 -------------------------------------
 
