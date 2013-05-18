@@ -523,9 +523,9 @@ Dovecot has now been configured. You must restart it to make sure it is working 
 
 ::
 
-  service postfix restart
   service dovecot restart
-
+  service postfix restart
+  
 That's Postfix and Dovecot installation is completed. Now let's install Apache and PHP for Postfix vManager Application.
 
 
