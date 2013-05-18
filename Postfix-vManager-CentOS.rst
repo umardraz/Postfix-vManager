@@ -76,7 +76,8 @@ Let's start the Mail server Installation.
 
 ::
 
-  sudo apt-get install postfix postfix-mysql sasl2-bin libsasl2-2 libsasl2-modules openssl mailutils procmail dovecot-mysql dovecot-imapd dovecot-pop3d
+  yum remove sendmail
+  yum install postfix cyrus-sasl cyrus-sasl-devel cyrus-sasl-gssapi cyrus-sasl-md5 cyrus-sasl-plain dovecot
 
 
 This will install the Postfix mail server, the Dovecot IMAP and POP daemons, and several supporting packages that provide services related to authentication. You will be prompted to choose a system mail name for Postfix, make sure this should be a fully qualified domain name (FQDN) that points to your server's IP address. I will use example.yourdomain.com in this setup.
@@ -167,7 +168,6 @@ Issue the following command to create a database for your mail server and switch
 ::
 
   CREATE DATABASE vmanager;
-  USE vmanager;
 
 Create a mail administration user called vadmin and grant it permissions on the mail database with the following commands. Please be sure to replace "vadmin_password" with a password you select for this user.
 
