@@ -87,60 +87,100 @@ After sucessfully installation of Postfix, in the next step will create database
 3.1. Apply The Quota Patch To Postfix
 -------------------------------------
 
-We have to get the Postfix sources, patch it with the quota patch, build new Postfix .deb packages and install those .deb packages:
+First we need to install some prerequisite packages.
 
 ::
 
-  apt-get build-dep postfix
+  yum install rpm-build db4-devel zlib-devel openldap-devel pcre-devel mysql-devel openssl-devel gcc
+
+We have to get the Postfix source rpm, patch it with the quota patch, build a new Postfix rpm package and install it. 
+
+::
+
   cd /usr/src
-  apt-get source postfix
+  wget http://vault.centos.org/6.4/os/Source/SPackages/postfix-2.6.6-2.2.el6_1.src.rpm
+  rpm -ivh postfix-2.6.6-2.2.el6_1.src.rpm
 
-Make sure you use the correct Postfix version in the following commands. I have Postfix 2.9.6 installed. You can find out your Postfix version by running
+The last command will show some warnings that you can ignore:
 
-::
-
-  postconf -d | grep mail_version
-
-The output should look like this:
+warning: user mockbuild does not exist - using root
+warning: group mockbuild does not exist - using root
 
 ::
 
-  mail_version = 2.9.6
-  milter_macro_v = $mail_name $mail_version
+  cd /root/rpmbuild/SOURCES
+  wget http://vda.sourceforge.net/VDA/postfix-2.6.5-vda-ng.patch.gz
+  gunzip postfix-2.6.5-vda-ng.patch.gz
+  cd /root/rpmbuild/SPECS/
 
-Now download the vda patch according to your postfix version and then apply on Postfix source with the following commands.
-
-::
-
-  wget http://vda.sourceforge.net/VDA/postfix-vda-v11-2.9.6.patch
+Now we must edit the file postfix.spec:
   
-  cd postfix-2.9.6
-  patch -p1 < ../postfix-vda-v11-2.9.6.patch
+::
 
-Next open debian/rules and change DEB_BUILD_HARDENING from 1 to 0:
+  vi postfix.spec
 
-**File:** debian/rules
+
+Add Patch0: postfix-2.6.5-vda-ng.patch to the # Patches stanza, and %patch0 -p1 -b .vda-ng to the %setup -q stanza:
 
 ::
 
   [...]
-  export DEB_BUILD_HARDENING=0
+  # Patches
+
+  Patch0: postfix-2.6.5-vda-ng.patch
+  Patch1: postfix-2.6.1-config.patch
+  Patch2: postfix-2.6.1-files.patch
+  Patch3: postfix-alternatives.patch
+  Patch8: postfix-large-fs.patch
+  Patch9: pflogsumm-1.1.1-datecalc.patch
+  Patch10: postfix-2.6.6-CVE-2011-0411.patch
+  Patch11: postfix-2.6.6-CVE-2011-1720.patch
+  [...]
+  %prep
+  %setup -q
+  # Apply obligatory patches
+  %patch0 -p1 -b .vda-ng
+  %patch1 -p1 -b .config
+  %patch2 -p1 -b .files
+  %patch3 -p1 -b .alternatives
+  %patch8 -p1 -b .large-fs
   [...]
 
-If you don't do this, your build will fail. Now we can build the new Postfix .deb packages:
+Then we build our new Postfix rpm package with quota and MySQL support:
 
 ::
 
-  dpkg-buildpackage
+  rpmbuild -ba postfix.spec
 
-After sucessfully build of postfix source, we need to go /usr/src directory where the new .deb packages have been created. Pick the postfix and postfix-mysql packages and install them like this: 
+Our Postfix rpm package is created in /root/rpmbuild/RPMS/x86_64 (/root/rpmbuild/RPMS/i386 if you are on an i386 system), so we go there:
 
 ::
 
-  cd /usr/src/
-  dpkg -i postfix_2.9.6-1~12.04.1_amd64.deb postfix-mysql_2.9.6-1~12.04.1_amd64.deb
+  cd /root/rpmbuild/RPMS/x86_64
+  ls -al
 
-The above command will update the existing postfix package with quota enabled pacakge.
+shows you the available packages:
+
+::
+
+  drwxr-xr-x 2 root root     4096 May 18 21:57 .
+  drwxr-xr-x 3 root root     4096 May 18 21:56 ..
+  -rw-r--r-- 1 root root 11573873 May 18 21:57 postfix-2.6.6-2.2.el6.x86_64.rpm
+  -rw-r--r-- 1 root root    63421 May 18 21:57 postfix-perl-scripts-2.6.6-2.2.el6.x86_64.rpm
+
+To make sure that no version of postfix was previously installed on your system, use:
+
+::
+
+  yum remove postfix
+  
+Pick the Postfix package and install it like this:
+
+::
+
+  rpm -ivh postfix-2.6.6-2.2.el6.x86_64.rpm
+
+The above command will install new postfix package with quota enabled pacakge.
 
 2. Set up MySQL database for Virtual Domains and Users
 -----------------
