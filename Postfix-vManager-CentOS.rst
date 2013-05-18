@@ -587,8 +587,6 @@ If you want to run Apache by default when the system boots, which is a typical s
 
   /sbin/chkconfig --levels 235 httpd on
   
-
-
 Installing PHP
 -----------------
 
@@ -596,49 +594,29 @@ We will therefore install PHP with the following command.
 
 ::
 
-  sudo apt-get install php5 php5-curl php5-gd php5-mcrypt php5-mysql -y
+  yum install php php-mysql php-pdo php-mysqli php-pear
 
-Configuring the Apache Virtual Host
------------------------------------
+Once PHP5 is installed we'll need to tune the configuration file located in /etc/php.ini to enable more descriptive errors, logging, and better performance. These modifications provide a good starting point if you're unfamiliar with PHP configuration.
 
-We will use /var/www/vamanager for our document root of Postfix vManager, now create the directory and apply proper permission
+Make sure that the following values are set, and relevant lines are uncommented (comments are lines beginning with a semi-colon (;)):
 
-::
-
-  mkdir -p /var/www/vmanager
-  chown -R www-data:www-data /var/www/
-
-We will create a simple virtual host configuration file that will instruct Apache to serve the contents of the directory /var/www/vmanager for any requests to example.yourdomain.com
+**File:** /etc/php.ini
 
 ::
 
-  sudo bash -c "cat >> /etc/apache2/sites-available/example.yourdomain.com <<EOF
-  <VirtualHost *:80>
-    ServerName example.yourdomain.com
-    ServerAlias yourdomain.com
-    DocumentRoot /var/www/vmanager
-    ErrorLog /var/log/httpd/vmanager.error.log
-    CustomLog /var/log/httpd/vmanager.access.log combined
-  </VirtualHost>
-  EOF"
+  error_reporting = E_COMPILE_ERROR|E_RECOVERABLE_ERROR|E_ERROR|E_CORE_ERROR
+  display_errors = Off
+  log_errors = On
+  error_log = /var/log/php.log
+  max_execution_time = 300
+  memory_limit = 64M
+  register_globals = Off
 
-As you notice, I have use /var/log/httpd directory for our application logs. We need to create this directory, before enabling our virtualhost.
+Whenver you change anything in php.ini file then you need to rstart apache server.
 
 ::
 
-  mkdir /var/log/httpd
-
-Using the a2ensite command and restarting Apache will load the new configuration file. But before this we will remove the existing link from site-enabled directory.
-
-::
-
-  rm /etc/apache2/sites-enabled/000-default
-  sudo a2ensite example.yourdomain.com
-  sudo service apache2 restart
-
-If everything has gone according to plan you should be able to open a browser and navigate to example.yourdomain.com where you will see a directory listing.
-
-Now let's start the installation of Postfix vManager
+  /etc/init.d/httpd restart
 
 5. Postfix vManager
 ===================
