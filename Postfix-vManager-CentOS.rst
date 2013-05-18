@@ -576,6 +576,17 @@ Before you can use the above configuration you'll need to create the specified d
 
   mkdir -p /var/www/vmanager
 
+Postfix vManager depends on url rewriting for SEO purpose. In order to take advantage of this feature we need to edit httpd.conf file as follows.
+
+Edit /etc/httpd/conf/httpd.conf file and change **AllowOverride None** to **AllowOverride All** under / directory e.g.
+
+::
+
+  <Directory />
+    Options FollowSymLinks
+    AllowOverride All
+  </Directory>
+
 After you've set up your virtual hosts, issue the following command to run Apache for the first time:
 
 ::
@@ -595,7 +606,7 @@ We will therefore install PHP with the following command.
 
 ::
 
-  yum install php php-mysql php-pdo php-mysqli php-pear
+  yum install php php-mysql php-pdo php-mysqli php-mbstring php-pear
 
 Once PHP5 is installed we'll need to tune the configuration file located in /etc/php.ini to enable more descriptive errors, logging, and better performance. These modifications provide a good starting point if you're unfamiliar with PHP configuration.
 
@@ -659,7 +670,7 @@ Postfix vManager require write access to its directory. So you need to change th
 
 ::
 
-  chown -R www-data:www-data /var/www/vmanager/
+  chown -R apache:apache /var/www/vmanager/
 
 5.2. Check settings, and create Admin user
 ------------------------------------------
