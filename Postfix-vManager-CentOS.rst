@@ -550,7 +550,7 @@ Apache is easily installed by entering the following command.
 
   yum install httpd
 
-Configure Name-based Virtual Hosts
+**Configure Name-based Virtual Hosts**
 
 There are different ways to set up Virtual Hosts, however we recommend the method below. By default, Apache listens on all IP addresses available to it.
 
@@ -579,7 +579,7 @@ After you've set up your virtual hosts, issue the following command to run Apach
 
 ::
 
-  /etc/init.d/httpd start
+  /etc/init.d/httpd restart
   
 If you want to run Apache by default when the system boots, which is a typical setup, execute the following command:
 
