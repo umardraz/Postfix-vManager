@@ -101,10 +101,6 @@ We have to get the Postfix source rpm, patch it with the quota patch, build a ne
 
 The last command will show some warnings that you can ignore:
 
-warning: user mockbuild does not exist - using root
-
-warning: group mockbuild does not exist - using root
-
 ::
 
   cd /root/rpmbuild/SOURCES
