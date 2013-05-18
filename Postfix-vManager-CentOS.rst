@@ -556,16 +556,18 @@ There are different ways to set up Virtual Hosts, however we recommend the metho
 
 Now we will create virtual host entries for example.yourdomain.com site that we need to host with this server. Here is this.
 
-File excerpt:/etc/httpd/conf.d/vhost.conf
+**File:** /etc/httpd/conf.d/vhost.conf
 
-<VirtualHost *:80>
+::
+
+  <VirtualHost *:80>
      ServerAdmin webmaster@yourdomain.com
      ServerName yourdomain.com
      ServerAlias example.yourdomain.com
      DocumentRoot /var/www/vmanager
      ErrorLog /var/log/httpd/error.log
      CustomLog /var/log/httpd/access.log combined
-</VirtualHost>
+  </VirtualHost>
 
 Before you can use the above configuration you'll need to create the specified directories. For the above configuration, you can do this with the following commands:
 
