@@ -739,7 +739,7 @@ Here we need to restart postfix service.
 
 **Configure vacation.pl"**
 
-The perl vacation.pl script needs to know which database you are using, and also how to connect to the database.
+The perl /var/spool/vacation/vacation.pl script needs to know which database you are using, and also how to connect to the database.
 
 Change any variables starting with '$db_' and '$db_type'
 
