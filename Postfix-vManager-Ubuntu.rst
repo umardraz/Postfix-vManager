@@ -731,3 +731,22 @@ Define the transport type in the Postfix /etc/postfix/master.cf file:
   vacation    unix  -       n       n       -       -       pipe
     flags=Rq user=vacation argv=/var/spool/vacation/vacation.pl -f ${sender} -- ${recipient}
 
+**Configure vacation.pl"**
+
+The perl vacation.pl script needs to know which database you are using, and also how to connect to the database.
+
+Change any variables starting with '$db_' and '$db_type'
+
+Change the $vacation_domain variable to match what you entered through your Super Admin login.
+
+Here is the example of vacatino.pl settings for database and domain name
+
+::
+
+  our $db_type = 'mysql';
+  our $db_host = 'localhost';
+  our $db_username = 'username';
+  our $db_password = 'password';
+  our $db_name     = 'dbname';
+
+Done! When this is all in place you need to have a look at the Postfix vManager inc/config.inc.php. Here you need to enable Virtual Vacation for the site.
