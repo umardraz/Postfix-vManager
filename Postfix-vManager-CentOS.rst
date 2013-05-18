@@ -1,5 +1,5 @@
 ==========================================================
-  Postfix vManager Ubuntu 12.04 LTS Server
+  Postfix vManager CentOS 6.4
 ==========================================================
 
 :Version: 2.0
@@ -32,7 +32,7 @@ Table of Contents
 2. MySQL Server Installation
 ============================
 
-Installing MySQL 5 Server on Ubuntu is a quick and easy process. In classic fashion let’s get the process underway by updating our system.
+Installing MySQL 5 Server on CentOS is a quick and easy process. In classic fashion let’s get the process underway by updating our system.
 
 ::
 
