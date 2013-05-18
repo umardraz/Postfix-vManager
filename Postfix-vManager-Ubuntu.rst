@@ -616,7 +616,7 @@ If everything has gone according to plan you should be able to open a browser an
 
 Now let's start the installation of Postfix vManager
 
-4. Postfix vManager
+5. Postfix vManager
 ===================
 
 First download postfix vmanager source from this url :Source: https://www.box.com/s/u4a4t675n2hx79468fwn
@@ -630,7 +630,31 @@ Then first remove the /var/www/vmanager directory and move extracted source into
   tar xzvpf postfix-vmanager-2.0.tar.gz
   rm -rf /var/www/vmanager
   mv postfix-vmanager-2.0 /var/www/vmanager
-  chown -R www-data:www-data /var/www/vmanager/
   
+Next restore the database, with the following command
 
+::
+
+  cd /var/www/vmanager/  
   mysql -uroot -proot_pass vmanager < setup/vmanager.sql
+
+5.1. Configure Postfix vManager
+----------------------
+
+Edit the inc/config.inc.php file and add your settings there. The most important settings are those for your database server.
+
+::
+
+  $CONF['database_host'] = 'localhost';
+  $CONF['database_user'] = 'vadmin';
+  $CONF['database_password'] = 'vadmin_password';
+  $CONF['database_name'] = 'vmanager';
+  $CONF['database_port'] = '3306';
+  $CONF['database_prefix'] = '';
+
+Postfix vManager require write access to its directory. So you need to change the vmanager directory ownership with that user as web server running.
+
+::
+
+  chown -R www-data:www-data /var/www/vmanager/
+
