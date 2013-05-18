@@ -391,7 +391,7 @@ Now create /etc/postfix/main.cf with the following contents Please be sure to re
   smtpd_etrn_restrictions = reject
   smtpd_helo_required = yes
   smtpd_recipient_limit = 25
-  smtpd_sender_login_maps = mysql:$config_directory/mysql_sender_check.cf
+  #smtpd_sender_login_maps = mysql:$config_directory/mysql_sender_check.cf
 
   smtpd_recipient_restrictions =
     permit_mynetworks,
@@ -407,12 +407,12 @@ Now create /etc/postfix/main.cf with the following contents Please be sure to re
 
   smtpd_sender_restrictions =
     permit_mynetworks,
-    reject_sender_login_mismatch,
+    #reject_sender_login_mismatch,
     permit_sasl_authenticated,
     reject_unauth_destination,
     reject_non_fqdn_sender,
     reject_unknown_sender_domain,
-    reject_unauthenticated_sender_login_mismatch,
+    #reject_unauthenticated_sender_login_mismatch,
     permit
 
 This completes the configuration for Postfix. Next, you'll make an SSL certificate for the Postfix server that contains values appropriate for your organization.
@@ -754,5 +754,6 @@ Here is the example of vacatino.pl settings for database and domain name
   our $db_username = 'username';
   our $db_password = 'password';
   our $db_name     = 'dbname';
+  our $vacation_domain = 'autoreply.yourdomain.com';
 
 Done! When this is all in place you need to have a look at the Postfix vManager inc/config.inc.php. Here you need to enable Virtual Vacation for the site.
