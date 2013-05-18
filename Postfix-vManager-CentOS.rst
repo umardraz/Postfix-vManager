@@ -560,6 +560,7 @@ Now we will create virtual host entries for example.yourdomain.com site that we 
 
 ::
 
+  NameVirtualHost *:80
   <VirtualHost *:80>
      ServerAdmin webmaster@yourdomain.com
      ServerName yourdomain.com
