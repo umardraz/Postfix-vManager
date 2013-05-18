@@ -339,7 +339,7 @@ Now create /etc/postfix/main.cf with the following contents Please be sure to re
   debugger_command =
          PATH=/bin:/usr/bin:/usr/local/bin:/usr/X11R6/bin
          ddd $daemon_directory/$process_name $process_id & sleep 5
-  html_directory = /usr/share/doc/postfix
+  html_directory = no
   disable_vrfy_command = yes
   mailbox_size_limit = 0
   owner_request_special = no
@@ -347,14 +347,14 @@ Now create /etc/postfix/main.cf with the following contents Please be sure to re
   home_mailbox = Maildir/
   mail_owner = postfix
   command_directory = /usr/sbin
-  daemon_directory = /usr/lib/postfix
+  daemon_directory = /usr/libexec/postfix
   data_directory = /var/lib/postfix
   queue_directory = /var/spool/postfix
   sendmail_path = /usr/sbin/sendmail
   newaliases_path = /usr/bin/newaliases
-  mailq_path = /usr/bin/mailq
+  mailq_path = /usr/bin/mailq.postfix
   mail_spool_directory = /var/spool/mail
-  manpage_directory = /usr/local/man
+  manpage_directory = /usr/share/man
   setgid_group = postdrop
   unknown_local_recipient_reject_code = 450
 
