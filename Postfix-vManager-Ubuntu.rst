@@ -730,6 +730,12 @@ Define the transport type in the Postfix /etc/postfix/master.cf file:
 
   vacation    unix  -       n       n       -       -       pipe
     flags=Rq user=vacation argv=/var/spool/vacation/vacation.pl -f ${sender} -- ${recipient}
+    
+Here we need to restart postfix service.
+
+::
+
+  service postfix restart
 
 **Configure vacation.pl"**
 
