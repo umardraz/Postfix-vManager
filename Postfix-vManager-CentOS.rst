@@ -77,10 +77,10 @@ Let's start the Mail server Installation.
 ::
 
   yum remove sendmail
-  yum install postfix cyrus-sasl cyrus-sasl-devel cyrus-sasl-gssapi cyrus-sasl-md5 cyrus-sasl-plain dovecot
+  yum install postfix cyrus-sasl cyrus-sasl-devel cyrus-sasl-gssapi cyrus-sasl-md5 cyrus-sasl-plain dovecot dovecot-mysql
 
 
-This will install the Postfix mail server, the Dovecot IMAP and POP daemons, and several supporting packages that provide services related to authentication. You will be prompted to choose a system mail name for Postfix, make sure this should be a fully qualified domain name (FQDN) that points to your server's IP address. I will use example.yourdomain.com in this setup.
+This will install the Postfix mail server, the Dovecot IMAP and POP daemons, and several supporting packages that provide services related to authentication.
 
 After sucessfully installation of Postfix, in the next step will create database for our Postfix vManager.
 
