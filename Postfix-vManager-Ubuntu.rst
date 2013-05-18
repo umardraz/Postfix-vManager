@@ -661,6 +661,22 @@ Postfix vManager require write access to its directory. So you need to change th
 5.2. Check settings, and create Admin user
 ------------------------------------------
 
-Hit :Source: https://example.yourdomain.com/ in a web browser. You should see a list of 'OK' messages. 
+Hit :Source: https://example.yourdomain.com/ in a web browser. You should see a list of 'OK' messages. Otherwise reslove the issue if found. 
 
 Create the admin user using the form displayed. This is all that is needed.
+
+5.3. Vacations
+--------------
+
+The vacation script runs as service within Postfix's master.cf configuration file. Mail is sent to the vacation service via a transport table mapping. When users mark themselves as away on vacation, an alias is added to their account sending a copy of all mail to them to the vacation service.
+
+To use vacation services you need to first create vacation domain. Just login as Super Admin account and then Go to Settings -> Vacation Domain.
+
+5.4. Installing Vacations
+-------------------------
+
+There are a bunch of Perl modules which need installing, depending on yourdistribution these may be available through your package management tool, or will need installing through CPAN.
+
+
+
+
