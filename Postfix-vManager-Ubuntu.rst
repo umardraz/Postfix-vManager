@@ -670,12 +670,22 @@ Create the admin user using the form displayed. This is all that is needed.
 
 The vacation script runs as service within Postfix's master.cf configuration file. Mail is sent to the vacation service via a transport table mapping. When users mark themselves as away on vacation, an alias is added to their account sending a copy of all mail to them to the vacation service.
 
-To use vacation services you need to first create vacation domain. Just login as Super Admin account and then Go to Settings -> Vacation Domain.
+To use vacation services you need to first create vacation domain. Just login as Super Admin account and then 
 
 5.4. Installing Vacations
 -------------------------
 
-There are a bunch of Perl modules which need installing, depending on yourdistribution these may be available through your package management tool, or will need installing through CPAN.
+Login as Super Admin and then create Vacation domain following this.
+
+::
+
+  Go to Settings -> Vacation Domain.
+
+There are a bunch of Perl modules which we need to install for Vacation setup.
+
+::
+
+  apt-get install libmime-encwords-perl libemail-valid-perl libemail-sender-perl libmail-sender-perl liblog-log4perl-perl liblog-dispatch-perl libdbi-perl libdbd-mysql-perl libmime-charset-perl
 
 
 
