@@ -687,6 +687,47 @@ There are a bunch of Perl modules which we need to install for Vacation setup.
 
   apt-get install libmime-encwords-perl libemail-valid-perl libemail-sender-perl libmail-sender-perl liblog-log4perl-perl liblog-dispatch-perl libdbi-perl libdbd-mysql-perl libmime-charset-perl
 
+**Create Vacation Account:**
 
+Create a dedicated local user account called "vacation". This user handles all potentially dangerous mail content - that is why it should be a separate account.
 
+Do not use "nobody", and most certainly do not use "root" or "postfix". The user will never log in, and can be given a "*" password and non-existent shell and home directory.
+
+Create the user with the following command.
+
+::
+
+  useradd vacation -c "Vacation Owner" -d /nonnonexistent -s /bin/false
+
+**Create a directory:**
+
+Create a directory, for example  /var/spool/vacation, that is accessible only to the "vacation" user. This is where the vacation script is supposed to store its temporary files. 
+
+::
+
+  mkdir /var/spool/vacation
+  
+**Copy Files:**
+
+Copy the vacation.pl file to the directory you created above:
+
+::
+
+  cp setup/vacation.pl /var/spool/vacation/vacation.pl
+  chown -R vacation:vacation /var/spool/vacation/
+  
+Which will then look something like:
+
+::
+
+  -rwx------   1 vacation  vacation  3356 Dec 21 00:00 vacation.pl*
+
+**Setup the transport type:**
+
+Define the transport type in the Postfix /etc/postfix/master.cf file:
+
+::
+
+  vacation    unix  -       n       n       -       -       pipe
+    flags=Rq user=vacation argv=/var/spool/vacation/vacation.pl -f ${sender} -- ${recipient}
 
