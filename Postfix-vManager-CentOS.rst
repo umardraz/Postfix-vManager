@@ -548,34 +548,44 @@ Apache is easily installed by entering the following command.
 
 ::
 
-  sudo apt-get install apache2 -y
+  yum install httpd
 
-During the install you may notice the following warning:
+Configure Name-based Virtual Hosts
+
+There are different ways to set up Virtual Hosts, however we recommend the method below. By default, Apache listens on all IP addresses available to it.
+
+Now we will create virtual host entries for example.yourdomain.com site that we need to host with this server. Here is this.
+
+File excerpt:/etc/httpd/conf.d/vhost.conf
+
+<VirtualHost *:80>
+     ServerAdmin webmaster@yourdomain.com
+     ServerName yourdomain.com
+     ServerAlias example.yourdomain.com
+     DocumentRoot /var/www/vmanager
+     ErrorLog /var/log/httpd/error.log
+     CustomLog /var/log/httpd/access.log combined
+</VirtualHost>
+
+Before you can use the above configuration you'll need to create the specified directories. For the above configuration, you can do this with the following commands:
 
 ::
 
-  apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1 for ServerName
+  mkdir -p /var/www/vmanager
 
-This comes from Apache itself and means that it was unable to determine its own name. The Apache server needs to know its own name under certain situations. For example, when creating redirection URLs.
-
-To stop this warning we can create an Apache config file to store the name. You can set this as either a hostname or a FQDN, but here we will use this as only "localhost"
+After you've set up your virtual hosts, issue the following command to run Apache for the first time:
 
 ::
 
-  echo "ServerName localhost" > /etc/apache2/conf.d/servername.conf
+  /etc/init.d/httpd start
   
-In order for this change to take effect restart Apache. The warning should no longer appear.
+If you want to run Apache by default when the system boots, which is a typical setup, execute the following command:
 
 ::
 
-  sudo service apache2 restart
+  /sbin/chkconfig --levels 235 httpd on
+  
 
-Postfix vManager depends on url rewriting for SEO purpose. In order to take advantage of this feature we need to enable Apache's rewrite module with the a2enmod command.
-
-::
-
-  sudo a2enmod rewrite
-  sudo service apache2 restart
 
 Installing PHP
 -----------------
