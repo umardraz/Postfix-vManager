@@ -633,4 +633,4 @@ Then first remove the /var/www/vmanager directory and move extracted source into
   chown -R www-data:www-data /var/www/vmanager/
   
 
-  
+  mysql -uroot -proot_pass vmanager < setup/vmanager.sql
