@@ -3,7 +3,7 @@
 ==========================================================
 
 :Version: 2.0
-:Source: https://www.box.com/s/hcnimhdi7t6ynr5ac711
+:Source: https://www.box.com/s/y4yx5fossu8l8i4as8vd
 :Keywords: Postfix Mail server management, Cyrus-SASL, Dovecot, MySQL, Virtual Domains, Alias Domains
 
 Author
@@ -619,7 +619,7 @@ Now let's start the installation of Postfix vManager
 5. Postfix vManager
 ===================
 
-First download postfix vmanager source from this url :Source: https://www.box.com/s/hcnimhdi7t6ynr5ac711
+First download postfix vmanager source from this url :Source: https://www.box.com/s/y4yx5fossu8l8i4as8vd
 
 After downloading the postfix-vmanager-2.0.tar.gz just extract the source. 
 
