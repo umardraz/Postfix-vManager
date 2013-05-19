@@ -52,10 +52,10 @@ Here is some screenshots of Postfix vManager.
 
 
 **FreeBSD:** 
-:Source: Postfix-vManager-FreeBSD.rst
+:Source: https://github.com/umardraz/Postfix-vManager/blob/master/Postfix-vManager-FreeBSD.rst
 
 **Ubuntu:** 
-:Source: Postfix-vManager-Ubuntu.rst
+:Source: https://github.com/umardraz/Postfix-vManager/blob/master/Postfix-vManager-Ubuntu.rst
 
 **CentOS:** 
-:Source: Postfix-vManager-CentOS.rst
+:Source: https://github.com/umardraz/Postfix-vManager/blob/master/Postfix-vManager-CentOS.rst
