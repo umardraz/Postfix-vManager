@@ -73,12 +73,12 @@ In the option list window you must select these options.
 
 ::
 
-  MYSQL
-  SASL2
-  SPF
-  TLS
-  VDA
-  DOVECOT2
+  [ .. ] MYSQL
+  [ .. ] SASL2
+  [ .. ] SPF
+  [ .. ] TLS
+  [ .. ] VDA
+  [ .. ] DOVECOT2
 
 This will install the Postfix mail server, the Dovecot IMAP and POP daemons, and several supporting packages that provide services related to authentication.
 
