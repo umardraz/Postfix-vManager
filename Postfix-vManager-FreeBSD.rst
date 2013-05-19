@@ -591,8 +591,6 @@ Here we need to restart apache server.
 
 If everything has gone according to plan you should be able to open a browser and navigate to **example.yourdomain.com**
 
-Now let's start the installation of Postfix vManager
-
 5. Postfix vManager
 ===================
 
