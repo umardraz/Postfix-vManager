@@ -560,35 +560,36 @@ In the menu list you must select these extensions. Don't uncheck other selected 
   [ .. ] MYSQLI
   [ .. ] PDO_MYSQL
 
-We will create a simple virtual host configuration file that will instruct Apache to serve the contents of the directory /var/www/vmanager for any requests to example.yourdomain.com
+**Enable PHP into Apache**
+
+Now that we have the requisite ports built and installed it’s time to configure them.
+
+Open the file /usr/local/etc/apache22/httpd.conf in your favorite editor and look for the following line:
 
 ::
 
-  sudo bash -c "cat >> /etc/apache2/sites-available/example.yourdomain.com <<EOF
-  <VirtualHost *:80>
-    ServerName example.yourdomain.com
-    ServerAlias yourdomain.com
-    DocumentRoot /var/www/vmanager
-    ErrorLog /var/log/httpd/vmanager.error.log
-    CustomLog /var/log/httpd/vmanager.access.log combined
-  </VirtualHost>
-  EOF"
+  DirectoryIndex index.html
 
-As you notice, I have use /var/log/httpd directory for our application logs. We need to create this directory, before enabling our virtualhost.
+And change it so it reads as follows:
 
 ::
 
-  mkdir /var/log/httpd
-
-Using the a2ensite command and restarting Apache will load the new configuration file. But before this we will remove the existing link from site-enabled directory.
+  DirectoryIndex index.html index.htm index.php
+  
+Then append the following lines to the end of the file in order to support PHP files as well as Postfix vManager
 
 ::
 
-  rm /etc/apache2/sites-enabled/000-default
-  sudo a2ensite example.yourdomain.com
-  sudo service apache2 restart
+  AddType application/x-httpd-php .php
+  AddType application/x-httpd-php-source .phps
 
-If everything has gone according to plan you should be able to open a browser and navigate to example.yourdomain.com where you will see a directory listing.
+Here we need to restart apache server.
+
+::
+
+  service apache22 restart
+
+If everything has gone according to plan you should be able to open a browser and navigate to **example.yourdomain.com**
 
 Now let's start the installation of Postfix vManager
 
