@@ -544,7 +544,14 @@ We will therefore install PHP with the following command.
 
 A menu should come up allowing you to select/deselect various build options. You should select “Build Apache module” by highlighting the option with the arrow keys and hitting the space bar, then hit Enter.
 
-After PHP installation we need add the requisite extensions to PHP for Postfix vManager. In the menu list you must select these extensions. Don't uncheck other selected options.
+After PHP installation we need add the requisite extensions to PHP for Postfix vManager. 
+
+::
+
+  cd /usr/ports/lang/php5-extensions/
+  make install clean
+
+In the menu list you must select these extensions. Don't uncheck other selected options.
 
 ::
 
