@@ -80,6 +80,8 @@ In the option list window you must select these options.
   [ .. ] VDA
   [ .. ] DOVECOT2
 
+And on Dovecot installation, when window appear, you must also select [ .. ] MYSQL option.
+
 This will install the Postfix mail server, the Dovecot IMAP and POP daemons, and several supporting packages that provide services related to authentication.
 
 After sucessfully installation of Postfix, in the next step will create database for our Postfix vManager.
@@ -477,7 +479,7 @@ Dovecot has now been configured. You must restart it to make sure it is working 
   service dovecot restart
   service postfix restart
   
-That's Postfix and Dovecot installation is completed. Now let's install Apache and PHP for Postfix vManager Application.
+Thats all Postfix and Dovecot installation is completed. Now let's install Apache and PHP for Postfix vManager Application.
 
 
 4. WebServer Installation
@@ -487,27 +489,17 @@ Apache is easily installed by entering the following command.
 
 ::
 
-  sudo apt-get install apache2 -y
+  cd /usr/ports/www/apache22
+  make install clean
 
-During the install you may notice the following warning:
-
-::
-
-  apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1 for ServerName
-
-This comes from Apache itself and means that it was unable to determine its own name. The Apache server needs to know its own name under certain situations. For example, when creating redirection URLs.
-
-To stop this warning we can create an Apache config file to store the name. You can set this as either a hostname or a FQDN, but here we will use this as only "localhost"
+Once Apache has been successfully installed, add the following line to /etc/rc.conf so that the Apache server will start automatically at system boot.
 
 ::
 
-  echo "ServerName localhost" > /etc/apache2/conf.d/servername.conf
-  
-In order for this change to take effect restart Apache. The warning should no longer appear.
+  echo 'apache22_enable="YES"' >> /etc/rc.conf
 
-::
 
-  sudo service apache2 restart
+
 
 Postfix vManager depends on url rewriting for SEO purpose. In order to take advantage of this feature we need to enable Apache's rewrite module with the a2enmod command.
 
