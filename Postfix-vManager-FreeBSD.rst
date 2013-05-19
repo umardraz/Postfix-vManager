@@ -248,8 +248,8 @@ Set proper permissions and ownership for these configuration files by issuing th
 
 ::
 
-  chmod o= /etc/postfix/mysql_*
-  chgrp postfix /etc/postfix/mysql_*
+  chmod o= /usr/local/etc/postfix/mysql_*
+  chgrp postfix /usr/local/etc/postfix/mysql_*
 
 Next, we'll create a user and group for mail handling. All virtual mailboxes will be stored under this user's home directory.
 
@@ -450,8 +450,8 @@ Replace the contents of the file with the following example, substituting your s
   }
 
   ssl = yes
-  ssl_cert = </home/domain/server.crt
-  ssl_key = </home/domain/server.key
+  ssl_cert = </etc/postfix/smtpd.cert
+  ssl_key = </etc/postfix/smtpd.key
 
   userdb {
     args = /usr/local/etc/dovecot/dovecot-mysql.conf
