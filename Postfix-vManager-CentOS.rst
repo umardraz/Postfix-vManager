@@ -730,11 +730,20 @@ Login as Super Admin and then create Vacation domain following this.
 
   Go to Settings -> Vacation Domain.
 
-There are a bunch of Perl modules which we need to install for Vacation setup.
+There are a bunch of Perl modules which we need to install for Vacation setup. I have used Dag Wieer Repo on Centos to install these required perl modules.
+
+Let's install dag.wieers repo if its not already installed.
 
 ::
 
-  apt-get install libmime-encwords-perl libemail-valid-perl libemail-sender-perl libmail-sender-perl liblog-log4perl-perl liblog-dispatch-perl libdbi-perl libdbd-mysql-perl libmime-charset-perl
+    wget http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
+    rpm -ivh rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
+
+After installing dag.wieers next we will install perl modules.
+
+::
+
+  yum install perl-MIME-EncWords perl-Email-Valid perl-Email-Sender perl-Mail-Sender perl-Log-Log4perl perl-Log-Dispatch perl-DBI perl-DBD-mysql perl-MIME-Charset
 
 **Create Vacation Account:**
 
