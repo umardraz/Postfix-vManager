@@ -631,7 +631,7 @@ Postfix vManager require write access to its directory. So you need to change th
 
 ::
 
-  chown -R www-data:www-data /var/www/vmanager/
+  chown -R www:www /var/www/vmanager/
 
 5.2. Check settings, and create Admin user
 ------------------------------------------
