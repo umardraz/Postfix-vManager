@@ -564,7 +564,13 @@ In the menu list you must select these extensions. Don't uncheck other selected 
 
 Now that we have the requisite ports built and installed it’s time to configure them.
 
-Open the file /usr/local/etc/apache22/httpd.conf in your favorite editor and look for the following line:
+Before going online with your site, you should consider copying /usr/local/etc/php.ini-production into php.ini
+
+::
+
+  cp /usr/local/etc/php.ini-development /usr/local/etc/php.ini
+
+Now enable php into apache, open the file /usr/local/etc/apache22/httpd.conf in your favorite editor and look for the following line:
 
 ::
 
@@ -631,7 +637,7 @@ Postfix vManager require write access to its directory. So you need to change th
 
 ::
 
-  chown -R www:www /var/www/vmanager/
+  chown -R www:www /usr/local/www/vmanager/
 
 5.2. Check settings, and create Admin user
 ------------------------------------------
