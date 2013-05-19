@@ -45,3 +45,10 @@ Here is some screenshots of Postfix vManager.
 4. Groups List
 ---------------
 ![Alt text](groups.png "Groups List")
+
+2. How to Install
+=================
+   
+**FreeBSD:** Postfix-vManager-FreeBSD.rst
+**Ubuntu:** Postfix-vManager-Ubuntu.rst
+**CentOS:** Postfix-vManager-CentOS.rst
