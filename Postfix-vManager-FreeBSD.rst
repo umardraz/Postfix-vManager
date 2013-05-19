@@ -66,70 +66,23 @@ Let's start the Mail server Installation.
 
 ::
 
-  sudo apt-get install postfix postfix-mysql sasl2-bin libsasl2-2 libsasl2-modules openssl mailutils procmail dovecot-mysql dovecot-imapd dovecot-pop3d
+  cd /usr/ports/mail/postfix
+  make install clean
 
+In the option list window you must select these options.
 
-This will install the Postfix mail server, the Dovecot IMAP and POP daemons, and several supporting packages that provide services related to authentication. You will be prompted to choose a system mail name for Postfix, make sure this should be a fully qualified domain name (FQDN) that points to your server's IP address. I will use example.yourdomain.com in this setup.
+::
+
+  MYSQL
+  SASL2
+  SPF
+  TLS
+  VDA
+  DOVECOT2
+
+This will install the Postfix mail server, the Dovecot IMAP and POP daemons, and several supporting packages that provide services related to authentication.
 
 After sucessfully installation of Postfix, in the next step will create database for our Postfix vManager.
-
-3.1. Apply The Quota Patch To Postfix
--------------------------------------
-
-We have to get the Postfix sources, patch it with the quota patch, build new Postfix .deb packages and install those .deb packages:
-
-::
-
-  apt-get build-dep postfix
-  cd /usr/src
-  apt-get source postfix
-
-Make sure you use the correct Postfix version in the following commands. I have Postfix 2.9.6 installed. You can find out your Postfix version by running
-
-::
-
-  postconf -d | grep mail_version
-
-The output should look like this:
-
-::
-
-  mail_version = 2.9.6
-  milter_macro_v = $mail_name $mail_version
-
-Now download the vda patch according to your postfix version and then apply on Postfix source with the following commands.
-
-::
-
-  wget http://vda.sourceforge.net/VDA/postfix-vda-v11-2.9.6.patch
-  
-  cd postfix-2.9.6
-  patch -p1 < ../postfix-vda-v11-2.9.6.patch
-
-Next open debian/rules and change DEB_BUILD_HARDENING from 1 to 0:
-
-**File:** debian/rules
-
-::
-
-  [...]
-  export DEB_BUILD_HARDENING=0
-  [...]
-
-If you don't do this, your build will fail. Now we can build the new Postfix .deb packages:
-
-::
-
-  dpkg-buildpackage
-
-After sucessfully build of postfix source, we need to go /usr/src directory where the new .deb packages have been created. Pick the postfix and postfix-mysql packages and install them like this: 
-
-::
-
-  cd /usr/src/
-  dpkg -i postfix_2.9.6-1~12.04.1_amd64.deb postfix-mysql_2.9.6-1~12.04.1_amd64.deb
-
-The above command will update the existing postfix package with quota enabled pacakge.
 
 2. Set up MySQL database for Virtual Domains and Users
 -----------------
