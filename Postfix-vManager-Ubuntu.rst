@@ -66,10 +66,7 @@ Let's start the Mail server Installation.
 
   sudo apt-get install postfix postfix-mysql sasl2-bin libsasl2-2 libsasl2-modules openssl mailutils procmail dovecot-mysql dovecot-imapd dovecot-pop3d
 
-
 This will install the Postfix mail server, the Dovecot IMAP and POP daemons, and several supporting packages that provide services related to authentication. You will be prompted to choose a system mail name for Postfix, make sure this should be a fully qualified domain name (FQDN) that points to your server's IP address. I will use example.yourdomain.com in this setup.
-
-After sucessfully installation of Postfix, in the next step will create database for our Postfix vManager.
 
 3.1. Apply The Quota Patch To Postfix
 -------------------------------------
@@ -128,6 +125,8 @@ After sucessfully build of postfix source, we need to go /usr/src directory wher
   dpkg -i postfix_2.9.6-1~12.04.1_amd64.deb postfix-mysql_2.9.6-1~12.04.1_amd64.deb
 
 The above command will update the existing postfix package with quota enabled pacakge.
+
+After sucessfully installation of Postfix, in the next step will create database for our Postfix vManager.
 
 2. Set up MySQL database for Virtual Domains and Users
 -----------------
