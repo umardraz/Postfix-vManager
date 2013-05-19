@@ -481,7 +481,6 @@ Dovecot has now been configured. You must restart it to make sure it is working 
   
 Thats all Postfix and Dovecot installation is completed. Now let's install Apache and PHP for Postfix vManager Application.
 
-
 4. WebServer Installation
 =========================
 
@@ -498,15 +497,40 @@ Once Apache has been successfully installed, add the following line to /etc/rc.c
 
   echo 'apache22_enable="YES"' >> /etc/rc.conf
 
+**Configure Name-based Virtual Hosts**
 
+Now we will create virtual host entries for example.yourdomain.com site that we need to host with this server. Here is this.
 
-
-Postfix vManager depends on url rewriting for SEO purpose. In order to take advantage of this feature we need to enable Apache's rewrite module with the a2enmod command.
+**File:** /usr/local/etc/apache22/httpd.conf
 
 ::
 
-  sudo a2enmod rewrite
-  sudo service apache2 restart
+  NameVirtualHost *:80
+  <VirtualHost *:80>
+    ServerAdmin webmaster@yourdomain.com
+    ServerName yourdomain.com
+    ServerAlias example.yourdomain.com
+    DocumentRoot /usr/local/www/vmanager
+    ErrorLog /var/log/vmanager-error.log
+    CustomLog /var/log/vmanager-access.log combined
+  </VirtualHost>
+
+Before you can use the above configuration you'll need to create the specified directories. For the above configuration, you can do this with the following commands:
+
+::
+
+  mkdir /usr/local/www/vmanager
+
+Postfix vManager depends on url rewriting for SEO purpose. In order to take advantage of this feature we need to edit httpd.conf file as follows.
+
+Edit /usr/local/etc/apache22/httpd.conf file and change **AllowOverride None** to **AllowOverride All** under / directory e.g.
+
+::
+
+  <Directory />
+    Options FollowSymLinks
+    AllowOverride All
+  </Directory>
 
 Installing PHP
 -----------------
@@ -515,17 +539,19 @@ We will therefore install PHP with the following command.
 
 ::
 
-  sudo apt-get install php5 php5-curl php5-gd php5-mcrypt php5-mysql -y
+  cd /usr/ports/lang/php5
+  make install cleean
 
-Configuring the Apache Virtual Host
------------------------------------
+A menu should come up allowing you to select/deselect various build options. You should select “Build Apache module” by highlighting the option with the arrow keys and hitting the space bar, then hit Enter.
 
-We will use /var/www/vamanager for our document root of Postfix vManager, now create the directory and apply proper permission
+After PHP installation we need add the requisite extensions to PHP for Postfix vManager. In the menu list you must select these extensions. Don't uncheck other selected options.
 
 ::
 
-  mkdir -p /var/www/vmanager
-  chown -R www-data:www-data /var/www/
+  [ .. ] MBSTRING
+  [ .. ] MYSQL
+  [ .. ] MYSQLI
+  [ .. ] PDO_MYSQL
 
 We will create a simple virtual host configuration file that will instruct Apache to serve the contents of the directory /var/www/vmanager for any requests to example.yourdomain.com
 
