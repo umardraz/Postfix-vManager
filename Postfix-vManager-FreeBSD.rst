@@ -255,12 +255,12 @@ Next, we'll create a user and group for mail handling. All virtual mailboxes wil
 
 ::
 
-  groupadd -g 150 vmail
-  useradd -g vmail -u 150 -d /home/vmail -m vmail
+  pw groupadd vmail -g 150
+  pw useradd vmail -g vmail -u 150 -d /home/vmail -m
 
 Now create /etc/postfix/main.cf with the following contents Please be sure to replace "example.yourdomain.com" with the fully qualified domain name you used for your system mail name.
 
-**File:** /etc/postfix/main.cf
+**File:** /usr/local/etc/postfix/main.cf
 
 ::
 
@@ -282,23 +282,24 @@ Now create /etc/postfix/main.cf with the following contents Please be sure to re
   debugger_command =
          PATH=/bin:/usr/bin:/usr/local/bin:/usr/X11R6/bin
          ddd $daemon_directory/$process_name $process_id & sleep 5
-  html_directory = /usr/share/doc/postfix
+  html_directory = /usr/local/share/doc/postfix
   disable_vrfy_command = yes
   mailbox_size_limit = 0
   owner_request_special = no
   recipient_delimiter = +
   home_mailbox = Maildir/
   mail_owner = postfix
-  command_directory = /usr/sbin
-  daemon_directory = /usr/lib/postfix
-  data_directory = /var/lib/postfix
+  procmail_destination_recipient_limit = 1
+  command_directory = /usr/local/sbin
+  daemon_directory = /usr/local/libexec/postfix
+  data_directory = /var/db/postfix
   queue_directory = /var/spool/postfix
-  sendmail_path = /usr/sbin/sendmail
-  newaliases_path = /usr/bin/newaliases
-  mailq_path = /usr/bin/mailq
+  sendmail_path = /usr/local/sbin/sendmail
+  newaliases_path = /usr/local/bin/newaliases
+  mailq_path = /usr/local/bin/mailq
   mail_spool_directory = /var/spool/mail
   manpage_directory = /usr/local/man
-  setgid_group = postdrop
+  setgid_group = maildrop
   unknown_local_recipient_reject_code = 450
 
   # Virtual Domains and Users
@@ -379,7 +380,7 @@ Issue the following commands to create the SSL certificate
 
 ::
 
-  cd /etc/postfix
+  cd /usr/local/etc/postfix
   openssl req -new -outform PEM -out smtpd.cert -newkey rsa:2048 -nodes -keyout smtpd.key -keyform PEM -days 365 -x509
 
 You will be asked to enter several values similar to the output shown below. Be sure to enter the fully qualified domain name you used for the system mailname in place of "example.yourdomain.com".
@@ -407,7 +408,7 @@ This completes SSL certificate creation for Postfix. Next, you'll need to config
 
 Replace the contents of the file with the following example, substituting your system's domain name for yourdomain.com.
 
-**File:** /etc/dovecot/dovecot.conf
+**File:** /usr/local/etc/dovecot/dovecot.conf
 
 ::
 
@@ -418,19 +419,16 @@ Replace the contents of the file with the following example, substituting your s
   first_valid_uid = 150
   last_valid_gid = 150
   last_valid_uid = 150
-  log_path = /var/log/mail.log
+  log_path = /var/log/maillog
   log_timestamp = %Y-%m-%d %H:%M:%S
   auth_username_format = %Lu
   mail_access_groups = mail
   mail_location = maildir:~/Maildir
-
   passdb {
-    args = /etc/dovecot/dovecot-mysql.conf
+    args = /usr/local/etc/dovecot/dovecot-mysql.conf
     driver = sql
   }
-
   protocols = imap
-
   service auth {
     unix_listener /var/spool/postfix/private/auth {
       group = postfix
@@ -438,14 +436,12 @@ Replace the contents of the file with the following example, substituting your s
       user = postfix
     }
   }
-
   service imap-login {
     inet_listener imap {
       address = *
       port = 143
     }
   }
-
   service pop3-login {
     inet_listener pop3 {
       address = *
@@ -454,17 +450,17 @@ Replace the contents of the file with the following example, substituting your s
   }
 
   ssl = yes
-  ssl_cert = </etc/postfix/smtpd.cert
-  ssl_key = </etc/postfix/smtpd.key
+  ssl_cert = </home/domain/server.crt
+  ssl_key = </home/domain/server.key
 
   userdb {
-    args = /etc/dovecot/dovecot-mysql.conf
+    args = /usr/local/etc/dovecot/dovecot-mysql.conf
     driver = sql
   }
 
 MySQL will be used to store password information, so /etc/dovecot/dovecot-mysql.conf must be edited. Replace the contents of the file with the following example, making sure to replace "vadmin_password" with your mail password.
 
-**File:** /etc/dovecot/dovecot-mysql.conf
+**File:** /usr/local/etc/dovecot/dovecot-mysql.conf
 
 ::
 
