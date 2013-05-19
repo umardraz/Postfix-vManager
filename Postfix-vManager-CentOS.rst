@@ -730,20 +730,20 @@ Login as Super Admin and then create Vacation domain following this.
 
   Go to Settings -> Vacation Domain.
 
-There are a bunch of Perl modules which we need to install for Vacation setup. I have used Dag Wieer Repo on Centos to install these required perl modules.
+There are a bunch of Perl modules which we need to install for Vacation setup. We need to first install epel rpm package to install these perl modules.
 
-Let's install dag.wieers repo if its not already installed.
-
-::
-
-    wget http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
-    rpm -ivh rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
-
-After installing dag.wieers next we will install perl modules.
+Let's install epel rpm if its not already installed.
 
 ::
 
-  yum install perl-MIME-EncWords perl-Email-Valid perl-Email-Sender perl-Mail-Sender perl-Log-Log4perl perl-Log-Dispatch perl-DBI perl-DBD-mysql perl-MIME-Charset
+    wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+    rpm -Uvh epel-release-6-8.noarch.rpm
+
+After installing epel rpm in the next step we will install perl modules.
+
+::
+
+  yum install perl-MIME-EncWords perl-Email-Valid perl-Mail-Sender perl-Log-Log4perl perl-MIME-Charset
 
 **Create Vacation Account:**
 
