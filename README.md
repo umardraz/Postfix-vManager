@@ -30,10 +30,18 @@ Standard and enhanced features from Postfix vManager includes:
 
 Here is some screenshots of Postfix vManager.
 
+1. Login Page
+-------------
 ![Alt text](login.png "Login Page")
 
+2. Domains List
+----------------
 ![Alt text](domains.png "Domains List")
 
+3. Users List
+-------------
 ![Alt text](users.png "Users List")
 
+4. Groups List
+---------------
 ![Alt text](groups.png "Groups List")
