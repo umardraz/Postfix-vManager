@@ -77,7 +77,7 @@ Let's start the Mail server Installation.
 ::
 
   yum remove sendmail
-  yum install postfix cyrus-sasl cyrus-sasl-devel cyrus-sasl-gssapi cyrus-sasl-md5 cyrus-sasl-plain dovecot dovecot-mysql
+  yum install cyrus-sasl cyrus-sasl-devel cyrus-sasl-gssapi cyrus-sasl-md5 cyrus-sasl-plain dovecot dovecot-mysql
 
 
 This will install the Postfix mail server, the Dovecot IMAP and POP daemons, and several supporting packages that provide services related to authentication.
