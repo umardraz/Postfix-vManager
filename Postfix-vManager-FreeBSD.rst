@@ -39,13 +39,23 @@ Installing MySQL 5 Server on FreeBSD is a quick and easy process. In classic fas
   cd /usr/ports/databases/mysql51-server/
   make install clean
 
-When complete, run the following commands to configure mysql installation
+Add the following line to /etc/rc.conf:
 
 ::
 
-  sudo mysql_secure_installation
+  echo 'mysql_enable="YES"' >> /etc/rc.conf
 
-This utility allows you to limit access to the ‘root’ account, it removes the test database, and allows you to remove all anonymous accounts.
+And start the mysql server:
+
+::
+
+  /usr/local/etc/rc.d/mysql-server start
+  
+Then set a password for the MySQL root user:
+
+::
+
+  /usr/local/bin/mysqladmin -u root password 'your-password'
 
 That's All MySQL server has been installed, now lest install Postfix and Dovecot.
 
