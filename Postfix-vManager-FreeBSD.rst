@@ -291,7 +291,6 @@ Now create /etc/postfix/main.cf with the following contents Please be sure to re
   recipient_delimiter = +
   home_mailbox = Maildir/
   mail_owner = postfix
-  procmail_destination_recipient_limit = 1
   command_directory = /usr/local/sbin
   daemon_directory = /usr/local/libexec/postfix
   data_directory = /var/db/postfix
