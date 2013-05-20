@@ -472,7 +472,14 @@ MySQL will be used to store password information, so /etc/dovecot/dovecot-mysql.
   password_query = SELECT password FROM mailbox WHERE username = '%u'
   user_query = SELECT '/home/vmail/%d/%n/Maildir' as home, 'maildir:/home/vmail/%d/%n/Maildir' as mail, 150 AS uid, 6 AS gid, concat('dirsize:storage=',quota) AS quota FROM mailbox WHERE username ='%u' AND active ='1'
 
-Dovecot has now been configured. You must restart it to make sure it is working properly, also restart postfix:
+Postfix and Dovecot has now been configured, add the following lines to /etc/rc.conf so that the Postfix and Dovecot will start automatically ast system boot.
+
+::
+
+  echo 'postfix_enable="YES"' >> /etc/rc.conf
+  echo 'dovecot_enable="YES"' >> /etc/rc.conf
+
+You must restart Postfix and Dovecot to make sure both work properly.
 
 ::
 
