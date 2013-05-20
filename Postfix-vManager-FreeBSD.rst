@@ -610,7 +610,7 @@ First download postfix vmanager source from this url :Source: https://www.box.co
 
 After downloading the postfix-vmanager-2.0.tar.gz just extract the source. 
 
-Then first remove the /var/www/vmanager directory and move extracted source into /var/www/vmanager/ let's do it.
+Then first remove the /usr/local/www/vmanager directory and move extracted source into /usr/local/www/vmanager/ let's do it.
 
 ::
 
