@@ -615,14 +615,14 @@ Then first remove the /var/www/vmanager directory and move extracted source into
 ::
 
   tar xzvpf postfix-vmanager-2.0.tar.gz
-  rm -rf /var/www/vmanager
-  mv postfix-vmanager-2.0 /var/www/vmanager
+  rm -rf /usr/local/www/vmanager
+  mv postfix-vmanager-2.0 /usr/local/www/vmanager
   
 Next restore the database, with the following command
 
 ::
 
-  cd /var/www/vmanager/  
+  cd /usr/local/www/vmanager/
   mysql -uroot -proot_pass vmanager < setup/vmanager.sql
 
 5.1. Configure Postfix vManager
