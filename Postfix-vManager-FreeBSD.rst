@@ -338,8 +338,8 @@ Now create /etc/postfix/main.cf with the following contents Please be sure to re
   # TLS/SSL
   smtpd_use_tls = yes
   smtpd_tls_auth_only = no
-  smtpd_tls_cert_file = /etc/postfix/smtpd.cert
-  smtpd_tls_key_file = /etc/postfix/smtpd.key
+  smtpd_tls_cert_file = /usr/local/etc/postfix/smtpd.cert
+  smtpd_tls_key_file = /usr/local/etc/postfix/smtpd.key
 
   # Other Configurations
   strict_rfc821_envelopes = yes
@@ -452,8 +452,8 @@ Replace the contents of the file with the following example, substituting your s
   }
 
   ssl = yes
-  ssl_cert = </etc/postfix/smtpd.cert
-  ssl_key = </etc/postfix/smtpd.key
+  ssl_cert = </usr/local/etc/postfix/smtpd.cert
+  ssl_key = </usr/local/etc/postfix/smtpd.key
 
   userdb {
     args = /usr/local/etc/dovecot/dovecot-mysql.conf
