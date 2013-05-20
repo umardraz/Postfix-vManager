@@ -401,7 +401,7 @@ Set proper permissions for the key file by issuing the following command:
 
 ::
 
-  chmod o= /etc/postfix/smtpd.key
+  chmod o= /usr/local/etc/postfix/smtpd.key
 
 This completes SSL certificate creation for Postfix. Next, you'll need to configure Dovecot for imap service.
 
