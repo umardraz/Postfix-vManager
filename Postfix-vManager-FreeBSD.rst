@@ -672,29 +672,14 @@ There are a bunch of Perl modules which we need to install for Vacation setup.
 
 ::
 
-  cd /usr/ports/mail/p5-MIME-EncWords
-  make install clean
-
-  cd /usr/ports/mail/p5-Email-Valid
-  make install clean
-  
-  cd /usr/ports/mail/p5-Email-Sender
-  make install clean
-
-  cd /usr/ports/mail/p5-Mail-Sender
-  make install clean
-
-  cd /usr/ports/devel/p5-Log-Log4perl
-  make install clean
-  
-  cd /usr/ports/devel/p5-Log-Dispatch
-  make install clean
-
-  cd /usr/ports/databases/p5-DBI
-  make install clean
-
-  cd /usr/ports/databases/p5-DBD-mysql
-  make install clean
+  cd /usr/ports/mail/p5-MIME-EncWords ; make install clean
+  cd /usr/ports/mail/p5-Email-Valid ; make install clean
+  cd /usr/ports/mail/p5-Email-Sender ; make install clean
+  cd /usr/ports/mail/p5-Mail-Sender ; make install clean
+  cd /usr/ports/devel/p5-Log-Log4perl ; make install clean
+  cd /usr/ports/devel/p5-Log-Dispatch ; make install clean
+  cd /usr/ports/databases/p5-DBI ; make install clean
+  cd /usr/ports/databases/p5-DBD-mysql ; make install clean
 
 **Create Vacation Account:**
 
