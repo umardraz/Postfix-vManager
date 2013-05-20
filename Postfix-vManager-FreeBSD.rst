@@ -672,7 +672,29 @@ There are a bunch of Perl modules which we need to install for Vacation setup.
 
 ::
 
-  apt-get install libmime-encwords-perl libemail-valid-perl libemail-sender-perl libmail-sender-perl liblog-log4perl-perl liblog-dispatch-perl libdbi-perl libdbd-mysql-perl libmime-charset-perl
+  cd /usr/ports/mail/p5-MIME-EncWords
+  make install clean
+
+  cd /usr/ports/mail/p5-Email-Valid
+  make install clean
+  
+  cd /usr/ports/mail/p5-Email-Sender
+  make install clean
+
+  cd /usr/ports/mail/p5-Mail-Sender
+  make install clean
+
+  cd /usr/ports/devel/p5-Log-Log4perl
+  make install clean
+  
+  cd /usr/ports/devel/p5-Log-Dispatch
+  make install clean
+
+  cd /usr/ports/databases/p5-DBI
+  make install clean
+
+  cd /usr/ports/databases/p5-DBD-mysql
+  make install clean
 
 **Create Vacation Account:**
 
@@ -684,7 +706,7 @@ Create the user with the following command.
 
 ::
 
-  useradd vacation -c "Vacation Owner" -d /nonnonexistent -s /bin/false
+  pw useradd vacation -c "Vacation Owner" -d /nonnonexistent -s /usr/bin/false
 
 **Create a directory:**
 
