@@ -758,7 +758,7 @@ Here is the example of vacatino.pl settings for database and domain name
 
 Done! When this is all in place you need to have a look at the Postfix vManager inc/config.inc.php. Here you need to enable Virtual Vacation for the site.
 
-5. DKIM Domain Keys
+6. DKIM Domain Keys
 ===================
 
 DomainKeys Identified Mail (DKIM) is a method for associating a domain name to an email message, thereby allowing a person, role, or organization to claim some responsibility for the message and helps verify that your mail is legitimate. This will help your email not get flagged a spam or fraud, especially if you are doing bulk emailing or important emails.
@@ -777,6 +777,7 @@ Setup a domain key for your domain e.g yourdomain.com
   mkdir -p /etc/dkim/keys/$DKIMDOMAIN
   cd /etc/dkim/keys/$DKIMDOMAIN
   dkim-genkey -r -d $DKIMDOMAIN
+  mv default.private default
 
 If you want an easy web based way check out http://www.socketlabs.com/services/dkwiz which also gives you the DNS records.
 
@@ -784,7 +785,7 @@ Create a file /etc/dkim-keys.conf and insert into it a line like this (replacing
 
 ::
   
-  *@yourdomain.com:yourdomain.com:/etc/dkim/keys/yourdomain.com/default.private
+  *@yourdomain.com:yourdomain.com:/etc/dkim/keys/yourdomain.com/default
 
 If you used command line then check the file at /etc/dkim/keys/yourdomain.com/default.txt which will have something like this
 
@@ -792,7 +793,7 @@ If you used command line then check the file at /etc/dkim/keys/yourdomain.com/de
 
   default._domainkey IN TXT "v=DKIM1; k=rsa; p=MIGfMA0frgfrefgrweferNYlS+8jyrbAxNsghsPrWYgOQQWI0Ab4e9MT" ; ----- DKIM default for yourdomain.com
 
-Yours should be much longer, this was snipped for brevity. You need to add the TXT record **default.private._domainkey** with the key between the quotes. If you are using standard bind then you can copy/paste that into the named file.
+Yours should be much longer, this was snipped for brevity. You need to add the TXT record **default._domainkey** with the key between the quotes. If you are using standard bind then you can copy/paste that into the named file.
 
 Another TXT record worth adding is
 
@@ -831,4 +832,6 @@ Then of course restart postfix
   postfix reload
   
 
+This should now sign emails going out with the domain key, it pays to use this webpage to check things are working http://www.brandonchecketts.com/emailtest.php
 
+You can also check your domain TXT record verification from here: http://dkimcore.org/tools/keycheck.html
