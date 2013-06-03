@@ -21,7 +21,7 @@ Table of Contents
   3. Postfix and Dovecot
   4. Web Server Installation
   5. Postfix vManager Installation
-  6. DKIM Installation
+  6. DKIM (Domain Keys)
 
 1. Requirements
 ===============
@@ -767,7 +767,7 @@ First, install dkim-filters
 
 ::
 
-  apt-get install dkim-filter
+  apt-get install opendkim
   
 Setup a domain key for your domain e.g yourdomain.com
 
