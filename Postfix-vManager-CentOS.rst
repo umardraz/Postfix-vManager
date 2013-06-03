@@ -21,6 +21,7 @@ Table of Contents
   3. Postfix and Dovecot
   4. Web Server Installation
   5. Postfix vManager Installation
+  6. DKIM Domain Keys
 
 1. Requirements
 ===============
@@ -815,3 +816,83 @@ Here is the example of vacatino.pl settings for database and domain name
   our $vacation_domain = 'autoreply.yourdomain.com';
 
 Done! When this is all in place you need to have a look at the Postfix vManager inc/config.inc.php. Here you need to enable Virtual Vacation for the site.
+
+6. DKIM Domain Keys
+===================
+
+DomainKeys Identified Mail (DKIM) is a method for associating a domain name to an email message, thereby allowing a person, role, or organization to claim some responsibility for the message and helps verify that your mail is legitimate. This will help your email not get flagged a spam or fraud, especially if you are doing bulk emailing or important emails.
+
+First, install EPEL and dkim-milter
+
+::
+
+  rpm -Uvh http://epel.mirror.net.in/epel/6/x86_64/epel-release-6-8.noarch.rpm
+  yum install dkim-milter
+  
+Setup a domain key for your domain e.g yourdomain.com
+
+::
+
+  DKIMDOMAIN=yourdomain.com
+  mkdir -p /etc/dkim/keys/$DKIMDOMAIN
+  cd /etc/dkim/keys/$DKIMDOMAIN
+  dkim-genkey -r -d $DKIMDOMAIN
+  mv default.private default
+
+If you want an easy web based way check out http://www.socketlabs.com/services/dkwiz which also gives you the DNS records.
+
+Create a file **/etc/dkim-keys.conf** and insert into it a line like this (replacing 'domain.com' with your own domain)
+
+::
+  
+  *@yourdomain.com:yourdomain.com:/etc/dkim/keys/yourdomain.com/default
+
+If you used command line then check the file at /etc/dkim/keys/yourdomain.com/default.txt which will have something like this
+
+::
+
+  default._domainkey IN TXT "v=DKIM1; k=rsa; p=MIGfMA0frgfrefgrweferNYlS+8jyrbAxNsghsPrWYgOQQWI0Ab4e9MT" ; ----- DKIM default for yourdomain.com
+
+Yours should be much longer, this was snipped for brevity. You need to add the TXT record **default._domainkey** with the key between the quotes. If you are using standard bind then you can copy/paste that into the named file.
+
+Another TXT record worth adding is
+
+::
+
+  _domainkey IN TXT t=y;o=~;
+  
+Now look for and edit your **/etc/mail/dkim-milter/dkim-filter.conf**
+
+You need to have 2 lines like this.
+
+::
+
+  KeyList /etc/dkim-keys.conf
+  Socket inet:8891@localhost
+
+Then restart the DKIM filter
+
+::
+
+  /etc/init.d/dkim-filter restart
+  
+Now add the following code into the postifx config. This goes into main.cf (/etc/postfix/main.cf )
+
+::
+
+  milter_default_action = accept
+  milter_protocol = 2
+  smtpd_milters = inet:localhost:8891
+  non_smtpd_milters = inet:localhost:8891
+
+Then of course restart postfix
+
+::
+
+  postfix reload
+  
+This should now sign emails going out with the domain key.
+
+It pays to use this webpage to check things are working http://www.brandonchecketts.com/emailtest.php
+
+You can also check your domain TXT record verification from here: http://dkimcore.org/tools/keycheck.html
