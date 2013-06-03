@@ -781,7 +781,7 @@ Setup a domain key for your domain e.g yourdomain.com
 
 If you want an easy web based way check out http://www.socketlabs.com/services/dkwiz which also gives you the DNS records.
 
-Create a file /etc/dkim-keys.conf and insert into it a line like this (replacing 'domain.com' with your own domain)
+Create a file **/etc/dkim-keys.conf** and insert into it a line like this (replacing 'domain.com' with your own domain)
 
 ::
   
@@ -831,7 +831,8 @@ Then of course restart postfix
 
   postfix reload
   
+This should now sign emails going out with the domain key.
 
-This should now sign emails going out with the domain key, it pays to use this webpage to check things are working http://www.brandonchecketts.com/emailtest.php
+It pays to use this webpage to check things are working http://www.brandonchecketts.com/emailtest.php
 
 You can also check your domain TXT record verification from here: http://dkimcore.org/tools/keycheck.html
