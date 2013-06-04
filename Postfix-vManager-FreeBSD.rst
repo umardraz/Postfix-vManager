@@ -828,5 +828,31 @@ Here you need to move **default.private** to **default**
 
 Now insert default.txt content in to your domain's zone file.
 
-default._domainkey IN TXT "v=DKIM1; g=*; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQClJj0qvcQvX7ssbGNBqFCTt+Wrh9G15QIXkFPbspt4uUOthLR8yl56CKohRVFfQTjoZjrmxSYDD8ZfV4rnPUu5bz07w7hbL3X1N5rLOM7RTDWU0NrYzGNVS07H4XNUJQRifVULREEqqvjASX6ivp1AH+OvvKn9mQTaSTjviD2cdQIDAQAB"
+::
+
+  default._domainkey IN TXT "v=DKIM1; g=*; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQClJj0qvcQvX7ssbGNBqFCTt+Wrh9G15QIXkFPbspt4uUOthLR8yl56CKohRVFfQTjoZjrmxSYDD8ZfV4rnPUu5bz07w7hbL3X1N5rLOM7RTDWU0NrYzGNVS07H4XNUJQRifVULREEqqvjASX6ivp1AH+OvvKn9mQTaSTjviD2cdQIDAQAB"
+
+In RFC 5617 has been adopted “Author Domain Signing Practices” (ADSP). It means that a domain can publish the signing practices it adopts when relaying mail on behalf of associated authors. So, insert also the ADSP record in your zone:
+
+_adsp._domainkey    IN    TXT    "dkim=unknown"
+
+Now test the key using an OpenDKIM utiliy:
+
+::
+
+  opendkim-testkey -vvv -d yourdomain.com -s default -k /var/db/opendkim/default
+  
+The above command will verify your zone settings.
+
+Now start both OpenDKIM and Postifix:
+
+::
+
+  /usr/local/etc/rc.d/milter-opendkim start
+  /usr/local/etc/rc.d/postfix restart
+
+Look at the DKIM-signature, there it is.
+
+Further check and analysis can be made also on the website http://www.brandonchecketts.com/emailtest.php
+ 
 
