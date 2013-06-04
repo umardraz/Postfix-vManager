@@ -813,18 +813,37 @@ Feel free to use the following one slightly edited to work with **yourdomain.com
   ReportAddress     root
   SendReports       yes
 
+Edit /usr/local/etc/opendkim/TrustedHosts
+
+::
+
+  nano /usr/local/etc/opendkim/TrustedHosts
+
+Add domains, hostnames and/or ip’s that should be handled by OpenDKIM. Don’t forget localhost.
+
+::
+
+  127.0.0.1
+  localhost
+  x.253.204.64
+  x.253.204.32/27
+
+**Generate keys**
+
 Now generate the keys: one will be used by opendkim to sign your messages and the other to be inserted in your dns zone:
 
 ::
 
+  mkdir -p /var/db/opendkim/yourdomain.com
   opendkim-genkey -D /var/db/opendkim -d yourdomain.com -s default
-
+  
 Here you need to move **default.private** to **default**
 
 ::
 
-  cd /var/db/opendkim/
+  cd /var/db/opendkim/yourdomain.com/
   mv default.private default
+  chown opendkim:mail /var/db/opendkim/
 
 Now insert default.txt content in to your domain's zone file.
 
