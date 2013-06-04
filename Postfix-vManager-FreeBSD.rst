@@ -834,7 +834,9 @@ Now insert default.txt content in to your domain's zone file.
 
 In RFC 5617 has been adopted “Author Domain Signing Practices” (ADSP). It means that a domain can publish the signing practices it adopts when relaying mail on behalf of associated authors. So, insert also the ADSP record in your zone:
 
-_adsp._domainkey    IN    TXT    "dkim=unknown"
+::
+
+  _adsp._domainkey    IN    TXT    "dkim=unknown"
 
 Now test the key using an OpenDKIM utiliy:
 
@@ -854,5 +856,3 @@ Now start both OpenDKIM and Postifix:
 Look at the DKIM-signature, there it is.
 
 Further check and analysis can be made also on the website http://www.brandonchecketts.com/emailtest.php
- 
-
