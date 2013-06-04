@@ -21,6 +21,7 @@ Table of Contents
   3. Postfix and Dovecot
   4. Web Server Installation
   5. Postfix vManager Installation
+  6. OpenDKIM (Domain Keys)
 
 1. Requirements
 ===============
@@ -751,3 +752,81 @@ Here is the example of vacatino.pl settings for database and domain name
   our $vacation_domain = 'autoreply.yourdomain.com';
 
 Done! When this is all in place you need to have a look at the Postfix vManager inc/config.inc.php. Here you need to enable Virtual Vacation for the site.
+
+6. Domain Keys
+==============
+
+I’m going to show you how to run Postifx with OpenDKIM on a FreeBSD operating system.
+
+Prepare the installation of OpenDKIM adding an opendkim user:
+
+::
+
+  pw useradd -n opendkim -d /var/db/opendkim -g mail -m -s "/usr/sbin/nologin" -w no
+
+Let’s start installing OpenDKIM.
+
+::
+
+  cd /usr/ports/mail/opendkim
+  make install clean
+
+Then allow OpenDKIM starting at boot time and executing as opendkim user:
+
+::
+
+  echo 'milteropendkim_enable="YES"' >> /etc/rc.conf
+  echo 'milteropendkim_uid="opendkim"' >> /etc/rc.conf
+
+Edit Postfix configuration file.
+
+::
+
+  nano /usr/local/etc/postfix/main.cf
+
+And instruct postfix to use dkim milter:
+
+::
+
+  smtpd_milters = inet:127.0.0.1:8891
+  non_smtpd_milters = $smtpd_milters
+  milter_default_action = accept
+
+Create configuration file for OpenDKIM
+
+::
+
+  nano /usr/local/etc/opendkim.conf
+  
+Feel free to use the following one slightly edited to work with **yourdomain.com** domain:
+
+::
+
+  LogWhy yes
+  Syslog yes
+  SyslogSuccess yes
+  Canonicalization relaxed/simple
+  Domain yourdomain.com
+  Selector default
+  KeyFile /var/db/opendkim/default
+  Socket inet:8891@localhost
+  ReportAddress root
+  SendReports yes
+
+Now generate the keys: one will be used by opendkim to sign your messages and the other to be inserted in your dns zone:
+
+::
+
+  opendkim-genkey -D /var/db/opendkim -d yourdomain.com -s default
+
+Here you need to move **default.private** to **default**
+
+::
+
+  cd /var/db/opendkim/
+  mv default.private default
+
+Now insert default.txt content in to your domain's zone file.
+
+default._domainkey IN TXT "v=DKIM1; g=*; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQClJj0qvcQvX7ssbGNBqFCTt+Wrh9G15QIXkFPbspt4uUOthLR8yl56CKohRVFfQTjoZjrmxSYDD8ZfV4rnPUu5bz07w7hbL3X1N5rLOM7RTDWU0NrYzGNVS07H4XNUJQRifVULREEqqvjASX6ivp1AH+OvvKn9mQTaSTjviD2cdQIDAQAB"
+
