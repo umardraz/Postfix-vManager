@@ -834,7 +834,7 @@ Here you need to move **default.private** to **default**
 
   cd /etc/opendkim/yourdomain.com/
   mv default.private default
-  chown opendkim:mail /etc/opendkim/
+  chown opendkim:opendkim /etc/opendkim/
   
 Add domain to KeyTable /etc/opendkim/KeyTable
 
