@@ -758,81 +758,125 @@ Here is the example of vacatino.pl settings for database and domain name
 
 Done! When this is all in place you need to have a look at the Postfix vManager inc/config.inc.php. Here you need to enable Virtual Vacation for the site.
 
-6. DKIM Domain Keys
-===================
+6. Domain Keys
+==============
 
-DomainKeys Identified Mail (DKIM) is a method for associating a domain name to an email message, thereby allowing a person, role, or organization to claim some responsibility for the message and helps verify that your mail is legitimate. This will help your email not get flagged a spam or fraud, especially if you are doing bulk emailing or important emails.
+I’m going to show you how to run Postifx with OpenDKIM on a Ubuntu LTS Server.
 
-First, install dkim-filters
+Let’s start installing OpenDKIM.
 
 ::
 
   apt-get install opendkim
-  
-Setup a domain key for your domain e.g yourdomain.com
+
+Edit Postfix configuration file.
 
 ::
 
-  DKIMDOMAIN=yourdomain.com
-  mkdir -p /etc/dkim/keys/$DKIMDOMAIN
-  cd /etc/dkim/keys/$DKIMDOMAIN
-  dkim-genkey -r -d $DKIMDOMAIN
-  mv default.private default
+  nano /etc/postfix/main.cf
 
-If you want an easy web based way check out http://www.socketlabs.com/services/dkwiz which also gives you the DNS records.
-
-Create a file **/etc/dkim-keys.conf** and insert into it a line like this (replacing 'domain.com' with your own domain)
-
-::
-  
-  *@yourdomain.com:yourdomain.com:/etc/dkim/keys/yourdomain.com/default
-
-If you used command line then check the file at /etc/dkim/keys/yourdomain.com/default.txt which will have something like this
+And instruct postfix to use dkim milter:
 
 ::
 
-  default._domainkey IN TXT "v=DKIM1; k=rsa; p=MIGfMA0frgfrefgrweferNYlS+8jyrbAxNsghsPrWYgOQQWI0Ab4e9MT" ; ----- DKIM default for yourdomain.com
-
-Yours should be much longer, this was snipped for brevity. You need to add the TXT record **default._domainkey** with the key between the quotes. If you are using standard bind then you can copy/paste that into the named file.
-
-Another TXT record worth adding is
-
-::
-
-  _domainkey IN TXT t=y;o=~;
-  
-Now look for and edit your **/etc/mail/dkim-milter/dkim-filter.conf**
-
-You need to have 2 lines like this.
-
-::
-
-  KeyList /etc/dkim-keys.conf
-  Socket inet:8891@localhost
-
-Then restart the DKIM filter
-
-::
-
-  /etc/init.d/dkim-filter restart
-  
-Now add the following code into the postifx config. This goes into main.cf (/etc/postfix/main.cf )
-
-::
-
+  smtpd_milters = inet:127.0.0.1:8891
+  non_smtpd_milters = $smtpd_milters
   milter_default_action = accept
-  milter_protocol = 2
-  smtpd_milters = inet:localhost:8891
-  non_smtpd_milters = inet:localhost:8891
 
-Then of course restart postfix
+Create configuration file for OpenDKIM
 
 ::
 
-  postfix reload
+  nano /etc/opendkim.conf
   
-This should now sign emails going out with the domain key.
+Feel free to use the following one slightly edited to work with **yourdomain.com** domain:
 
-It pays to use this webpage to check things are working http://www.brandonchecketts.com/emailtest.php
+::
 
-You can also check your domain TXT record verification from here: http://dkimcore.org/tools/keycheck.html
+  LogWhy            yes
+  Syslog            yes
+  SyslogSuccess     yes
+  Canonicalization  relaxed/simple
+  KeyTable          /var/db/opendkim/KeyTable
+  SigningTable      /var/db/opendkim/SigningTable
+  InternalHosts     /var/db/opendkim/TrustedHosts
+  Socket            inet:8891@localhost
+  ReportAddress     root
+  SendReports       yes
+
+Edit /etc/opendkim/TrustedHosts
+
+::
+
+  nano /etc/opendkim/TrustedHosts
+
+Add domains, hostnames and/or ip’s that should be handled by OpenDKIM. Don’t forget localhost.
+
+::
+
+  127.0.0.1
+  localhost
+  x.253.204.64
+  x.253.204.32/27
+
+**Generate keys**
+
+Now generate the keys: one will be used by opendkim to sign your messages and the other to be inserted in your dns zone:
+
+::
+
+  mkdir -p /etc/opendkim/yourdomain.com
+  opendkim-genkey -D /etc/opendkim/yourdomain.com/ -d yourdomain.com -s default
+  
+Here you need to move **default.private** to **default**
+
+::
+
+  cd /etc/opendkim/yourdomain.com/
+  mv default.private default
+  chown opendkim:mail /etc/opendkim/
+  
+Add domain to KeyTable /etc/opendkim/KeyTable
+
+::
+
+  default._domainkey.yourdomain.com yourdomain.com:default:/etc/opendkim/yourdomain.com/default
+
+Add domain to SigningTable /etc/opendkim/SigningTable
+
+::
+
+  yourdomain.com default._domainkey.yourdomain.com
+
+**Add to DKIM public key to DNS**
+
+Add an entry for the public key to the DNS server you are using for your domain. You find the public key here:
+
+::
+
+  cat /etc/opendkim/yourdomain.com/default.txt
+  
+The above output should be like.
+
+::
+
+  default._domainkey IN TXT "v=DKIM1; g=*; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQClJj0qvcQvX7ssbGNBqFCTt+Wrh9G15QIXkFPbspt4uUOthLR8yl56CKohRVFfQTjoZjrmxSYDD8ZfV4rnPUu5bz07w7hbL3X1N5rLOM7RTDWU0NrYzGNVS07H4XNUJQRifVULREEqqvjASX6ivp1AH+OvvKn9mQTaSTjviD2cdQIDAQAB"
+
+Now test the key using an OpenDKIM utiliy:
+
+::
+
+  opendkim-testkey -vvv -d yourdomain.com -s default -k /etc/opendkim/yourdomain.com/default
+  
+The above command will verify your zone settings.
+
+Now start both OpenDKIM and Postifix:
+
+::
+
+  /etc/init.d/opendkim start
+  /etc/init.d/postfix restart
+
+Look at the DKIM-signature, there it is.
+
+Further check and analysis can be made also on the website http://www.brandonchecketts.com/emailtest.php
