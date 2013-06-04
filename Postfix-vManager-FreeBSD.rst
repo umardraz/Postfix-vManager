@@ -835,7 +835,7 @@ Now generate the keys: one will be used by opendkim to sign your messages and th
 ::
 
   mkdir -p /var/db/opendkim/yourdomain.com
-  opendkim-genkey -D /var/db/opendkim -d yourdomain.com -s default
+  opendkim-genkey -D /var/db/opendkim/yourdomain.com/ -d yourdomain.com -s default
   
 Here you need to move **default.private** to **default**
 
@@ -844,18 +844,32 @@ Here you need to move **default.private** to **default**
   cd /var/db/opendkim/yourdomain.com/
   mv default.private default
   chown opendkim:mail /var/db/opendkim/
+  
+Add domain to KeyTable /var/db/opendkim/KeyTable
 
-Now insert default.txt content in to your domain's zone file.
+::
+
+  default._domainkey.yourdomain.com yourdomain.com:default:/var/db/opendkim/yourdomain.com/default
+
+Add domain to SigningTable /var/db/opendkim/SigningTable
+
+::
+
+  yourdomain.com default._domainkey.yourdomain.com
+
+Add to DKIM public key to DNS
+
+Add an entry for the public key to the DNS server you are using for your domain. You find the public key here:
+
+::
+
+  cat /var/db/opendkim/yourdomain.com/default.txt
+  
+The above output should be like.
 
 ::
 
   default._domainkey IN TXT "v=DKIM1; g=*; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQClJj0qvcQvX7ssbGNBqFCTt+Wrh9G15QIXkFPbspt4uUOthLR8yl56CKohRVFfQTjoZjrmxSYDD8ZfV4rnPUu5bz07w7hbL3X1N5rLOM7RTDWU0NrYzGNVS07H4XNUJQRifVULREEqqvjASX6ivp1AH+OvvKn9mQTaSTjviD2cdQIDAQAB"
-
-In RFC 5617 has been adopted “Author Domain Signing Practices” (ADSP). It means that a domain can publish the signing practices it adopts when relaying mail on behalf of associated authors. So, insert also the ADSP record in your zone:
-
-::
-
-  _adsp._domainkey    IN    TXT    "dkim=unknown"
 
 Now test the key using an OpenDKIM utiliy:
 
