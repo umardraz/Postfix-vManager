@@ -857,7 +857,7 @@ Add domain to SigningTable /var/db/opendkim/SigningTable
 
   yourdomain.com default._domainkey.yourdomain.com
 
-Add to DKIM public key to DNS
+**Add to DKIM public key to DNS**
 
 Add an entry for the public key to the DNS server you are using for your domain. You find the public key here:
 
