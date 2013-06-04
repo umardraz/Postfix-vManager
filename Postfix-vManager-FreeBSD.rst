@@ -813,11 +813,11 @@ Feel free to use the following one slightly edited to work with **yourdomain.com
   ReportAddress     root
   SendReports       yes
 
-Edit /usr/local/etc/opendkim/TrustedHosts
+Edit /var/db/opendkim/TrustedHosts
 
 ::
 
-  nano /usr/local/etc/opendkim/TrustedHosts
+  nano /var/db/opendkim/TrustedHosts
 
 Add domains, hostnames and/or ip’s that should be handled by OpenDKIM. Don’t forget localhost.
 
