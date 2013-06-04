@@ -802,16 +802,16 @@ Feel free to use the following one slightly edited to work with **yourdomain.com
 
 ::
 
-  LogWhy yes
-  Syslog yes
-  SyslogSuccess yes
-  Canonicalization relaxed/simple
-  Domain yourdomain.com
-  Selector default
-  KeyFile /var/db/opendkim/default
-  Socket inet:8891@localhost
-  ReportAddress root
-  SendReports yes
+  LogWhy            yes
+  Syslog            yes
+  SyslogSuccess     yes
+  Canonicalization  relaxed/simple
+  KeyTable          /var/db/opendkim/KeyTable
+  SigningTable      /var/db/opendkim/SigningTable
+  InternalHosts     /var/db/opendkim/TrustedHosts
+  Socket            inet:8891@localhost
+  ReportAddress     root
+  SendReports       yes
 
 Now generate the keys: one will be used by opendkim to sign your messages and the other to be inserted in your dns zone:
 
