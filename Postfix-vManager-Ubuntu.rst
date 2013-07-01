@@ -767,7 +767,7 @@ Let’s start installing OpenDKIM.
 
 ::
 
-  apt-get install opendkim
+  apt-get install opendkim opendkim-tools
 
 Edit Postfix configuration file.
 
@@ -797,9 +797,9 @@ Feel free to use the following one slightly edited to work with **yourdomain.com
   Syslog            yes
   SyslogSuccess     yes
   Canonicalization  relaxed/simple
-  KeyTable          /var/db/opendkim/KeyTable
-  SigningTable      /var/db/opendkim/SigningTable
-  InternalHosts     /var/db/opendkim/TrustedHosts
+  KeyTable          /etc/opendkim/KeyTable
+  SigningTable      /etc/opendkim/SigningTable
+  InternalHosts     /etc/opendkim/TrustedHosts
   Socket            inet:8891@localhost
   ReportAddress     root
   SendReports       yes
