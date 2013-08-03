@@ -517,7 +517,7 @@ MySQL will be used to store password information, so /etc/dovecot/dovecot-mysql.
   connect = host=localhost user=vadmin password=vadmin_password dbname=vmanager
   default_pass_scheme = MD5-CRYPT
   password_query = SELECT password FROM mailbox WHERE username = '%u'
-  user_query = SELECT '/home/vmail/%d/%n/Maildir' as home, 'maildir:/home/vmail/%d/%n/Maildir' as mail, 150 AS uid, 6 AS gid, concat('dirsize:storage=',quota) AS quota FROM mailbox WHERE username ='%u' AND active ='1'
+  user_query = SELECT '/home/vmail/%d/%n/Maildir' as home, 'maildir:/home/vmail/%d/%n/Maildir' as mail, 150 AS uid, 150 AS gid, concat('dirsize:storage=',quota) AS quota FROM mailbox WHERE username ='%u' AND active ='1'
 
 Dovecot has now been configured. You must restart it to make sure it is working properly, also restart postfix:
 
