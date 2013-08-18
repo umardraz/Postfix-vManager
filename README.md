@@ -49,10 +49,10 @@ Here is some screenshots of Postfix vManager.
 2. How to Install
 =================
 
-
-
 **FreeBSD:** https://github.com/umardraz/Postfix-vManager/blob/master/Postfix-vManager-FreeBSD.rst
 
 **Ubuntu:**  https://github.com/umardraz/Postfix-vManager/blob/master/Postfix-vManager-Ubuntu.rst
 
 **CentOS:**  https://github.com/umardraz/Postfix-vManager/blob/master/Postfix-vManager-CentOS.rst
+
+**For any bug Report or suggesions:** Please email me umar_draz@yahoo.com
