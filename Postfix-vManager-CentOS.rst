@@ -576,6 +576,18 @@ Dovecot has now been configured. You must restart it to make sure it is working 
   
 That's Postfix and Dovecot installation is completed. Now let's install Apache and PHP for Postfix vManager Application.
 
+Testing TLS
+===========
+
+To verify Postfix supports TLS, it has to be displaying STARTTLS when you connect to port 25 with telnet and run the EHLO command. We set this up in a previous step.
+
+To verify the SSL certificate is working and Postfix can negotiate the SSL encryption you can use the openssl command.
+
+::
+
+  openssl s_client -starttls smtp -crlf -connect mail.example.com:25
+
+Substitute mail.example.com with the hostname of your mail server.
 
 4. WebServer Installation
 =========================
