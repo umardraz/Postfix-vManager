@@ -227,7 +227,7 @@ Create a sender check configuration file called /etc/postfix/mysql_sender_check.
   password = vadmin_password
   hosts = localhost
   dbname = vmanager
-  query = SELECT username FROM mailbox WHERE username='%s' and active=1
+  query = SELECT username FROM ( SELECT username as username FROM mailbox UNION ALL SELECT address FROM alias_domain) a where username = '%s'
 
 Create a transport map configuration file called /etc/postfix/mysql_transport.cf with the following contents. Be sure to replace "vadmin_password" with the password you chose earlier for the MySQL mail administrator user.
 
@@ -406,13 +406,15 @@ Now create /etc/postfix/main.cf with the following contents Please be sure to re
     permit
 
   smtpd_sender_restrictions =
+    smtpd_sender_restrictions =
     permit_mynetworks,
+    reject_unverified_sender,
     #reject_sender_login_mismatch,
+    #reject_unauthenticated_sender_login_mismatch,
     permit_sasl_authenticated,
     reject_unauth_destination,
     reject_non_fqdn_sender,
     reject_unknown_sender_domain,
-    #reject_unauthenticated_sender_login_mismatch,
     permit
 
 This completes the configuration for Postfix. Next, you'll make an SSL certificate for the Postfix server that contains values appropriate for your organization.
