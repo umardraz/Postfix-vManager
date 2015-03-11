@@ -795,9 +795,9 @@ And instruct postfix to use dkim milter:
 
 ::
 
-  smtpd_milters = inet:127.0.0.1:8891
-  non_smtpd_milters = $smtpd_milters
   milter_default_action = accept
+  smtpd_milters = inet:localhost:8891
+  non_smtpd_milters = $smtpd_milters
 
 Create configuration file for OpenDKIM
 
