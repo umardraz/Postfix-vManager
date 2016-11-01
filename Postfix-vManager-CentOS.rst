@@ -846,8 +846,8 @@ Setup a domain key for your domain e.g yourdomain.com
 ::
 
   DKIMDOMAIN=yourdomain.com
-  mkdir -p /etc/dkim/keys/$DKIMDOMAIN
-  cd /etc/dkim/keys/$DKIMDOMAIN
+  mkdir -p /etc/opendkim/keys/$DKIMDOMAIN
+  cd /etc/opendkim/keys/$DKIMDOMAIN
   opendkim-genkey -d $DKIMDOMAIN -s default
   chown -R opendkim:opendkim /etc/opendkim/
   
