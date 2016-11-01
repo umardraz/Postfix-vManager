@@ -869,13 +869,23 @@ Next, edit /etc/opendkim/SigningTable and add the following record to OpenDKIMâ€
 
 ::
 
-If you want an easy web based way check out http://www.socketlabs.com/services/dkwiz which also gives you the DNS records.
+Next add your domain and your hostname as trusted hosts in /etc/opendkim/TrustedHosts:
 
-Create a file **/etc/dkim-keys.conf** and insert into it a line like this (replacing 'domain.com' with your own domain)
+::
 
+  127.0.0.1
+  yourdomain.com
+  host.yourdomain.com
 
-  
-  *@yourdomain.com:yourdomain.com:/etc/dkim/keys/yourdomain.com/default
+::
+
+Add the content of your /etc/opendkim/keys/$DKIMDOMAIN/default.txt and add the TXT record. Something like this
+
+::
+
+  v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDtik4sLqjTXRPduOZHPo5pp9+Jf5vdHe7FxBKvfy7rKPTOJtcCsi7ekTUiSmckURX81T1A9Y11BKVEt07OdaZWuVC816fVsw0+2TD4S03CzqMLDOZy NrRfasGsDEl4EwLEAWZcnvNIRhn4CcAs93P/2rMNKYq4/jQbQCmjq73GPwIDAQAB
+
+::
 
 If you used command line then check the file at /etc/dkim/keys/yourdomain.com/default.txt which will have something like this
 
