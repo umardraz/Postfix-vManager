@@ -887,28 +887,39 @@ Add the content of your /etc/opendkim/keys/$DKIMDOMAIN/default.txt and add the T
 
 ::
 
-If you used command line then check the file at /etc/dkim/keys/yourdomain.com/default.txt which will have something like this
+Finally proceed with configuring /etc/opendkim.conf,  rename the default configuration something like /etc/opendkim.conf.orig
 
 ::
 
-  default._domainkey IN TXT "v=DKIM1; k=rsa; p=MIGfMA0frgfrefgrweferNYlS+8jyrbAxNsghsPrWYgOQQWI0Ab4e9MT" ; ----- DKIM default for yourdomain.com
-
-Yours should be much longer, this was snipped for brevity. You need to add the TXT record **default._domainkey** with the key between the quotes. If you are using standard bind then you can copy/paste that into the named file.
-
-Another TXT record worth adding is
-
-::
-
-  _domainkey IN TXT t=y;o=~;
+  mv /etc/opendkim.conf{,.orig}
+  /etc/opendkim.conf
   
-Now look for and edit your **/etc/mail/dkim-milter/dkim-filter.conf**
+::
 
-You need to have 2 lines like this.
+And add the following content in the above configuration file.
 
 ::
 
-  KeyList /etc/dkim-keys.conf
-  Socket inet:8891@localhost
+  AutoRestart             Yes
+  AutoRestartRate         10/1h
+  LogWhy                  Yes
+  Syslog                  Yes
+  SyslogSuccess           Yes
+  Mode                    sv
+  Canonicalization        relaxed/simple
+  ExternalIgnoreList      refile:/etc/opendkim/TrustedHosts
+  InternalHosts           refile:/etc/opendkim/TrustedHosts
+  KeyTable                refile:/etc/opendkim/KeyTable
+  SigningTable            refile:/etc/opendkim/SigningTable
+  SignatureAlgorithm      rsa-sha256
+  Socket                  inet:8891@localhost
+  PidFile                 /var/run/opendkim/opendkim.pid
+  UMask                   022
+  UserID                  opendkim:opendkim
+  TemporaryDirectory      /var/tmp
+
+::
+
 
 Then start the DKIM filter
 
