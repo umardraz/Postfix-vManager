@@ -856,7 +856,9 @@ Setup a domain key for your domain e.g yourdomain.com
 After generating the domain key we need to add the domain into KeyTable.
 
 ::
+
 echo "default._domainkey.$DKIMDOMAIN $DKIMDOMAIN:default:/etc/opendkim/keys/$DKIMDOMAIN/default.private" >> /etc/opendkim/KeyTable
+
 ::
 
 Next, edit /etc/opendkim/SigningTable and add the following record to OpenDKIM’s signing table:
