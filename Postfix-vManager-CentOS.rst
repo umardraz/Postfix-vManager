@@ -1,5 +1,5 @@
 ==========================================================
-  Postfix vManager CentOS 6.4
+  Postfix vManager CentOS 7
 ==========================================================
 
 :Version: 2.0
@@ -43,20 +43,20 @@ Accept any updates that are available to you and then install MySQL Server like 
   
 ::
 
-  yum install mysql-server mysql-client
+  yum install mariadb-server mariadb
 
 If you want to run MySQL by default when the system boots, which is a typical setup, execute the following command:
 
 ::
 
-  /sbin/chkconfig --levels 235 mysqld on
+  systemctl enable mariadb-server
   
 
 Now you can start the mysql daemon (mysqld) with the following command (as root):
 
 ::
 
-  /etc/init.d/mysqld start
+  systemctl start mariadb-server
 
 At this point MySQL should be ready to configure and run. While you shouldn't need to change the configuration file, note that it is located at /etc/my.cnf for future reference.
 
@@ -830,16 +830,16 @@ Here is the example of vacatino.pl settings for database and domain name
 
 Done! When this is all in place you need to have a look at the Postfix vManager inc/config.inc.php. Here you need to enable Virtual Vacation for the site.
 
-6. DKIM Domain Keys
+6. DKIM Domain Keys (OpenDKIM)
 ===================
 
 DomainKeys Identified Mail (DKIM) is a method for associating a domain name to an email message, thereby allowing a person, role, or organization to claim some responsibility for the message and helps verify that your mail is legitimate. This will help your email not get flagged a spam or fraud, especially if you are doing bulk emailing or important emails.
 
-First, install EPEL and dkim-milter
+Let's install OpenDKIM
 
 ::
 
-  yum install opendkim
+  yum -y install opendkim
   
 Setup a domain key for your domain e.g yourdomain.com
 
@@ -849,21 +849,27 @@ Setup a domain key for your domain e.g yourdomain.com
   mkdir -p /etc/dkim/keys/$DKIMDOMAIN
   cd /etc/dkim/keys/$DKIMDOMAIN
   opendkim-genkey -d $DKIMDOMAIN -s default
-  chown -R opendkim:opendkim /etc/opendkim/keys/$DKIMDOMAIN
+  chown -R opendkim:opendkim /etc/opendkim/
   
-  
-  echo "default._domainkey.$DKIMDOMAIN $DKIMDOMAIN:default:/etc/opendkim/keys/$DKIMDOMAIN/default.private" >> /etc/opendkim/KeyTable
-  
+::
+
+After generating the domain key we need to add the domain into KeyTable.
+
+::
+echo "default._domainkey.$DKIMDOMAIN $DKIMDOMAIN:default:/etc/opendkim/keys/$DKIMDOMAIN/default.private" >> /etc/opendkim/KeyTable
+::
+
+Next, edit /etc/opendkim/SigningTable and add the following record to OpenDKIM’s signing table:
+
+::
   echo "*@$DKIMDOMAIN default._domainkey.$DKIMDOMAIN" >> /etc/opendkim/SigningTable
-  
-  dkim-genkey -r -d $DKIMDOMAIN
-  mv default.private default
+::  
 
 If you want an easy web based way check out http://www.socketlabs.com/services/dkwiz which also gives you the DNS records.
 
 Create a file **/etc/dkim-keys.conf** and insert into it a line like this (replacing 'domain.com' with your own domain)
 
-::
+
   
   *@yourdomain.com:yourdomain.com:/etc/dkim/keys/yourdomain.com/default
 
