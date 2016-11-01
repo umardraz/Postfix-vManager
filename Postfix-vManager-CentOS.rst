@@ -839,8 +839,7 @@ First, install EPEL and dkim-milter
 
 ::
 
-  rpm -Uvh http://epel.mirror.net.in/epel/6/x86_64/epel-release-6-8.noarch.rpm
-  yum install dkim-milter
+  yum install opendkim
   
 Setup a domain key for your domain e.g yourdomain.com
 
@@ -849,6 +848,14 @@ Setup a domain key for your domain e.g yourdomain.com
   DKIMDOMAIN=yourdomain.com
   mkdir -p /etc/dkim/keys/$DKIMDOMAIN
   cd /etc/dkim/keys/$DKIMDOMAIN
+  opendkim-genkey -d $DKIMDOMAIN -s default
+  chown -R opendkim:opendkim /etc/opendkim/keys/$DKIMDOMAIN
+  
+  
+  echo "default._domainkey.$DKIMDOMAIN $DKIMDOMAIN:default:/etc/opendkim/keys/$DKIMDOMAIN/default.private" >> /etc/opendkim/KeyTable
+  
+  echo "*@$DKIMDOMAIN default._domainkey.$DKIMDOMAIN" >> /etc/opendkim/SigningTable
+  
   dkim-genkey -r -d $DKIMDOMAIN
   mv default.private default
 
@@ -883,12 +890,13 @@ You need to have 2 lines like this.
   KeyList /etc/dkim-keys.conf
   Socket inet:8891@localhost
 
-Then restart the DKIM filter
+Then start the DKIM filter
 
 ::
 
-  /etc/init.d/dkim-filter restart
-  
+  systemctl enable opendkim
+  systemctl start opendkim
+    
 Now add the following code into the postifx config. This goes into main.cf (/etc/postfix/main.cf )
 
 ::
