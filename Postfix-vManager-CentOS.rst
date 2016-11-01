@@ -942,7 +942,7 @@ We also need to restart the postfix after modifiy Postfix configuration.
 
 ::
 
-  postfix reload
+  systemctl restart postfix
 
 ::
   
