@@ -920,7 +920,6 @@ And add the following content in the above configuration file.
 
 ::
 
-
 Then start the DKIM filter
 
 ::
@@ -928,20 +927,24 @@ Then start the DKIM filter
   systemctl enable opendkim
   systemctl start opendkim
     
-Now add the following code into the postifx config. This goes into main.cf (/etc/postfix/main.cf )
+Add the following code into the postifx config. This goes into main.cf (/etc/postfix/main.cf )
 
 ::
 
   milter_default_action = accept
   milter_protocol = 2
   smtpd_milters = inet:localhost:8891
-  non_smtpd_milters = inet:localhost:8891
+  non_smtpd_milters = $smtpd_milters
 
-Then of course restart postfix
+::
+
+We also need to restart the postfix after modifiy Postfix configuration.
 
 ::
 
   postfix reload
+
+::
   
 This should now sign emails going out with the domain key.
 
