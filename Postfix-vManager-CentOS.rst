@@ -857,15 +857,17 @@ After generating the domain key we need to add the domain into KeyTable.
 
 ::
 
-echo "default._domainkey.$DKIMDOMAIN $DKIMDOMAIN:default:/etc/opendkim/keys/$DKIMDOMAIN/default.private" >> /etc/opendkim/KeyTable
+  echo "default._domainkey.$DKIMDOMAIN $DKIMDOMAIN:default:/etc/opendkim/keys/$DKIMDOMAIN/default.private" >> /etc/opendkim/KeyTable
 
 ::
 
 Next, edit /etc/opendkim/SigningTable and add the following record to OpenDKIM’s signing table:
 
 ::
+
   echo "*@$DKIMDOMAIN default._domainkey.$DKIMDOMAIN" >> /etc/opendkim/SigningTable
-::  
+
+::
 
 If you want an easy web based way check out http://www.socketlabs.com/services/dkwiz which also gives you the DNS records.
 
