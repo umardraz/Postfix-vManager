@@ -887,6 +887,16 @@ Add the content of your /etc/opendkim/keys/$DKIMDOMAIN/default.txt and add the T
 
 ::
 
+You can verify if your dkim TXT record is valid using dig for example:
+
+::
+  
+  dig +short default._domainkey.yourdomain.com TXT
+
+  "v=DKIM1\; k=rsa\; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCwSJE/Mr29n8pQC2Q7oWmxCiADsLWZGmzBWZXKZQYLgKzAKfghuGlJjCbZZQZVsU9aNI4adoG59zB+vNwcUBLTRO6MbFWxZs1+C4XbIenwB5gQi9Eg9+hemNNMN+uvYrrD1q73mLPQJIHXie1tLaofdumBPSBQDDKxfpwgCW2SGQIDAQAB"
+
+::
+
 Finally proceed with configuring /etc/opendkim.conf,  rename the default configuration something like /etc/opendkim.conf.orig
 
 ::
